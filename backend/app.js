@@ -43,6 +43,10 @@ app.use(
 
 app.use(routes);
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to the Airbnb API!' });
+});
+
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
@@ -74,5 +78,6 @@ app.use((err, _req, res, _next) => {
     stack: isProduction ? null : err.stack
   });
 });
+
 
 module.exports = app;
