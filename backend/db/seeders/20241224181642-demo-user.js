@@ -1,5 +1,7 @@
 'use strict';
 
+/** @type {import('sequelize-cli').Migration} */
+
 const { User } = require('../models');
 const bcrypt = require("bcryptjs");
 
@@ -15,20 +17,23 @@ module.exports = {
         email: 'demo@user.io',
         username: 'Demo-lition',
         hashedPassword: bcrypt.hashSync('password'),
+        //hashedPassword: bcrypt.hashSync('password', 10), // added the ,10 to confirm the hashedPawword is valid
         firstName: 'Eskender',
         lastName: 'Beza'
       },
       {
         email: 'user1@user.io',
         username: 'FakeUser1',
-        hashedPassword: bcrypt.hashSync('password2'),
+        hashedPassword: bcrypt.hashSync('password'),
+        //hashedPassword: bcrypt.hashSync('password2', 10), // added the ,10 to confirm the hashedPawword is valid
         firstName: 'Saba',
         lastName: 'Eshetie'
       },
       {
         email: 'user2@user.io',
         username: 'FakeUser2',
-        hashedPassword: bcrypt.hashSync('password3'),
+        hashedPassword: bcrypt.hashSync('password'),
+        //hashedPassword: bcrypt.hashSync('password3', 10), // added the ,10 to confirm the hashedPawword is valid
         firstName: 'NoliMeba',
         lastName: 'Beza'
       }
