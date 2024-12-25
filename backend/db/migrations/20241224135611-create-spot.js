@@ -84,11 +84,10 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    });
+    }, options);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('SpotImages');
-    await queryInterface.dropTable('Reviews');
-    await queryInterface.dropTable('Spots');
+    options.tableName = "Spots";
+    return queryInterface.dropTable(options);
   }
 };

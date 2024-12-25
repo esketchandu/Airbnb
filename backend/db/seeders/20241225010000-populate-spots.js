@@ -67,18 +67,11 @@ module.exports = {
     );
   },
 
-  async down(queryInterface, Sequelize) {
-    await Spot.destroy({
-      where: {
-        name: {
-          [Op.in]: [
-            'App Academy',
-            'Tech House',
-            'Creative Space',
-            'Startup Central',
-          ],
-        },
-      },
-    });
-  },
+  async down (queryInterface, Sequelize) {
+    options.tableName = 'Spots';
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(options, {
+      name: { [Op.in]: ['App Academy','Tech House','Creative Space','Startup Central'] }
+    }, {});
+  }
 };
