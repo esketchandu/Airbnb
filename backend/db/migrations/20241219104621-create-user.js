@@ -51,7 +51,13 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "Users";
-    return queryInterface.dropTable(options);
+    const options = { schema: process.env.SCHEMA || undefined };
+
+    // Drop dependent tables first
+    await queryInterface.dropTable('Reviews', options);
+    await queryInterface.dropTable('Spots', options);
+
+    // Then drop the Users table
+    return queryInterface.dropTable('Users', options);
   }
 };
