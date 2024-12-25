@@ -43,22 +43,11 @@ module.exports = {
     );
   },
 
-  async down(queryInterface, Sequelize) {
-    const { Op } = Sequelize;
-    await queryInterface.bulkDelete(
-      'SpotImages', // Table name
-      {
-        url: {
-          [Op.in]: [
-            'https://image1.jpg',
-            'https://image2.jpg',
-            'https://image3.jpg',
-            'https://image4.jpg',
-            'https://image5.jpg',
-          ],
-        },
-      },
-      {}
-    );
-  },
+  async down (queryInterface, Sequelize) {
+    options.tableName = 'SpotImages';
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(options, {
+      url: { [Op.in]: ['https://image1.jpg', 'https://image2.jpg', 'https://image3.jpg', 'https://image4.jpg', 'https://image5.jpg'] }
+    }, {});
+  }
 };

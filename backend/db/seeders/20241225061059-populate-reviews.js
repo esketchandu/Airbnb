@@ -40,16 +40,11 @@ module.exports = {
     );
   },
 
-  async down(queryInterface, Sequelize) {
-    const { Op } = Sequelize;
-    await queryInterface.bulkDelete(
-      'Reviews',
-      {
-        id: {
-          [Op.in]: [1, 2, 3], // Matches the IDs of the records inserted
-        },
-      },
-      {}
-    );
-  },
+  async down (queryInterface, Sequelize) {
+    options.tableName = 'Reviews';
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(options, {
+      id: { [Op.in]: [1, 2, 3] }
+    }, {});
+  }
 };
