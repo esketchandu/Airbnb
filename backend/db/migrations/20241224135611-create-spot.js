@@ -87,7 +87,13 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Spots";
-    return queryInterface.dropTable(options);
+    const options = { schema: process.env.SCHEMA || undefined };
+
+    // Drop dependent tables first
+    await queryInterface.dropTable('SpotImages', options);
+    await queryInterface.dropTable('Reviews', options);
+
+    // Then drop the Spots table
+    return queryInterface.dropTable('Spots', options);
   }
 };
