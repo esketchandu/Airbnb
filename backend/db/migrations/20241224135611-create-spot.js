@@ -87,6 +87,8 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('SpotImages');
+    await queryInterface.dropTable('Reviews');
     await queryInterface.dropTable('Spots');
   }
 };

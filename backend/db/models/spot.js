@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Spot.belongsTo(models.User, { foreignKey: 'ownerId'});
       Spot.hasMany(models.SpotImage, { foreignKey: 'spotId'});
-      //Spot.hasMany(models.Review, { foreignKey: 'spotId'});
+      Spot.hasMany(models.Review, { foreignKey: 'spotId'});
       //Spot.hasMany(models.Booking, { foreignKey: 'spotId'})
     }
   }
@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'Users',
         key: 'id',
-      }
+      },
+      onDelete: 'CASCADE'
     },
     address: {
       type: DataTypes.STRING,
