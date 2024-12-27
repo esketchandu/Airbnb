@@ -149,8 +149,17 @@ router.get('/:spotId', async (req, res) => {
     });
   }
 
+  const formattedSpot = {
+    ...spot.toJSON(),
+    lat: parseFloat(spot.lat),
+    lng: parseFloat(spot.lng),
+    price: parseFloat(spot.price),
+    avgStarRating: parseFloat(spot.avgStarRating),
+    numReviews: parseInt(spot.numReviews, 10)
+  };
+
   // Respond with spot details
-  res.status(200).json(spot);
+  res.status(200).json(formattedSpot);
 });
 
 
