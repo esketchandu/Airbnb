@@ -16,7 +16,8 @@ module.exports = {
       ssl: {
         require: true,
         rejectUnauthorized: false
-      }
+      },
+      searchPath: [process.env.SCHEMA] // added it to resolve the issue pn Render
     },
     define: {
       schema: process.env.SCHEMA
