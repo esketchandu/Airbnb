@@ -150,12 +150,12 @@ router.get('/:spotId', async (req, res) => {
   }
 
   const formattedSpot = {
-    ...spot.toJSON(),
+    ...spot.toJSON(), // Includes all regular attributes and associations
     lat: parseFloat(spot.lat),
     lng: parseFloat(spot.lng),
     price: parseFloat(spot.price),
-    avgStarRating: parseFloat(spot.avgStarRating),
-    numReviews: parseInt(spot.numReviews, 10)
+    avgStarRating: spot.get('avgStarRating') ? parseFloat(spot.get('avgStarRating')) : 0, // Use get() to retrieve subquery values
+    numReviews: spot.get('numReviews') ? parseInt(spot.get('numReviews'), 10) : 0 // Use get() to retrieve subquery values
   };
 
   // Respond with spot details

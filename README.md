@@ -275,7 +275,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * Route path: /api/session/spots
+  * Route path: /api/spots/current           initially it was --> /api/session/spots
   * Body: none
 
 * Successful Response
