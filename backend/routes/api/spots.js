@@ -1,29 +1,12 @@
 const express = require('express');
 const { Spot, User, SpotImage, Review, sequelize } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
+const { check, validationResult } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
-// Get all spots
-// router.get('/', async (req, res) => {
-//   const spots = await Spot.findAll({
-//     include: [
-//       {
-//         model: User,
-//         //as: 'Owner',
-//         attributes: ['id', 'firstName', 'lastName']
-//       },
-//       {
-//         model: SpotImage,
-//         where: { preview: true },
-//         required: false, // Join only if a preview image exists
-//         attributes: ['url']
-//       }
-//     ]
-//   });
-//   res.json({ Spots: spots });
-// });
-
 //Get all spots
+
 router.get('/', async (req, res) => {
   const spots = await Spot.findAll({
     attributes: {
@@ -101,6 +84,7 @@ router.get('/current', requireAuth, async (req, res) => {
 });
 
 // Get details of a Spot from an id
+
 router.get('/:spotId', async (req, res) => {
   const { spotId } = req.params;
 
@@ -163,5 +147,92 @@ router.get('/:spotId', async (req, res) => {
 });
 
 
+// Create a spot for authorized and logged in user
+
+// Validation middleware
+const validateSpot = [
+  check('address')
+    .notEmpty().withMessage('Street address is required'),
+  check('city')
+    .notEmpty().withMessage('City is required'),
+  check('state')
+    .notEmpty().withMessage('State is required'),
+  check('country')
+    .notEmpty().withMessage('Country is required'),
+  check('lat')
+    .notEmpty().withMessage('Latitude is required')
+    .bail() // Prevent further validation if this fails
+    .isFloat({ min: -90, max: 90 })
+    .withMessage('Latitude must be within -90 and 90'),
+  check('lng')
+    .notEmpty().withMessage('Longitude is required')
+    .bail()
+    .isFloat({ min: -180, max: 180 })
+    .withMessage('Longitude must be within -180 and 180'),
+  check('name')
+    .notEmpty().withMessage('Name is required')
+    .bail()
+    .isLength({ max: 50 })
+    .withMessage('Name must be less than 50 characters'),
+  check('description')
+    .notEmpty().withMessage('Description is required'),
+  check('price')
+    .notEmpty().withMessage('Price is required')
+    .bail()
+    .isFloat({ gt: 0 })
+    .withMessage('Price per day must be a positive number'),
+    handleValidationErrors
+];
+
+// Create a Spot for validated input, authorized and logged in user
+
+router.post('/', requireAuth, validateSpot, async (req, res) => {
+  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  const { user } = req;
+
+  // Validate the request body
+  const errors = validationResult(req);
+
+  // if (!errors.isEmpty()) {
+  //   const errorsFormatted = {};
+
+  //   errors.array().forEach((error) => {
+  //     if (error.param) {
+  //       errorsFormatted[error.param] = error.msg; // Use param if defined
+  //     } else {
+  //       errorsFormatted.general = error.msg; // Fallback for undefined param
+  //     }
+  //   })
+
+    if (!errors.isEmpty()) {
+      // Transform errors into the desired format
+      const formattedErrors = {};
+      errors.array().forEach((error) => {
+        formattedErrors[error.param] = error.msg;
+      });
+
+    return res.status(400).json({
+      message: 'Bad Request',
+      errors: errorsFormatted,
+    });
+  }
+
+  // Create the spot
+  const newSpot = await Spot.create({
+    ownerId: user.id,
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price,
+  });
+
+  // Respond with the newly created spot
+  res.status(201).json(newSpot);
+});
 
 module.exports = router;
