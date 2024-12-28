@@ -275,7 +275,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * Route path: /api/spots/current           initially it was --> /api/session/spots
+  * Route path: /api/session/spots
   * Body: none
 
 * Successful Response
@@ -454,7 +454,7 @@ Create and return a new image for a spot specified by id.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: POST
-  * Route path: /api/spotImages/    ---> initially I had it as: /api/spots/:spotId/images
+  * Route path: /api/spots/:spotId/images    ---> it is /api/spots/5000/images in Postman
   * Headers:
     * Content-Type: application/json
   * Body:
