@@ -311,8 +311,15 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res) => {
     price: spot.price
   });
 
+  const formattedSpotEdit = {
+    ...spot.toJSON(), // Includes all regular attributes and associations
+    lat: parseFloat(spot.lat),
+    lng: parseFloat(spot.lng),
+    price: parseFloat(spot.price),
+  };
+
   // Finally respond with the updated spot
-  res.status(200).json(spot)
+  res.status(200).json(formattedSpotEdit)
 })
 
 module.exports = router;
