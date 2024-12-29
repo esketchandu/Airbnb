@@ -320,6 +320,39 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res) => {
 
   // Finally respond with the updated spot
   res.status(200).json(formattedSpotEdit)
+});
+
+// Delete a Spot; deletes an existing spot
+
+router.delete('/:spotId', requireAuth, async (req, res) => {
+  const { spotId } = req.params;
+  const { user } = req;
+
+  // First find the spot by its spotId
+  const spot = await Spot.findByPk(spotId);
+
+  // If a spot doesn't exist for the gievn spotId
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found"
+    });
+  }
+
+  // Check if the current logged in user owns the spot
+  if (spot.ownerId !== user.id) {
+    return res.status(403).json({
+      message: "You are not authorized to delete this spot"
+    });
+  }
+
+  // Delete the found spot
+  await spot.destroy();
+
+  // Finally respond with success message
+  res.status(200).json({
+    message: "Successfully deleted"
+  })
+
 })
 
 module.exports = router;
