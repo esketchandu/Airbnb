@@ -51,10 +51,17 @@ router.get('/current', requireAuth, async (req, res) => {
     // Remove the nested SpotImages array from the Spot object
     delete reviewJSON.Spot.SpotImages;
 
+    // Convert lat, lng, and price to numeric values
+    if (reviewJSON.Spot) {
+      reviewJSON.Spot.lat = parseFloat(reviewJSON.Spot.lat);
+      reviewJSON.Spot.lng = parseFloat(reviewJSON.Spot.lng);
+      reviewJSON.Spot.price = parseFloat(reviewJSON.Spot.price);
+    }
+
     return reviewJSON;
   });
 
-  // Respond with the reviews
+   // Respond with the reviews
   res.status(200).json({ Reviews: formattedReviews });
 });
 
