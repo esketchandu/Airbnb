@@ -65,36 +65,4 @@ router.get('/current', requireAuth, async (req, res) => {
   res.status(200).json({ Reviews: formattedReviews });
 });
 
-// Get all Reviews by a Spot's id
-
-router.get('spots/:spotId/reviews', async (req, res) => {
-  const { spotId } = req.params;
-
-  const spot = await Spot.findByPk(spotId)
-
-  if (!spot) {
-    return res.status(404).json({
-      message: "Spot couldn't be found"
-    })
-  }
-
-  // Next find all the reviews of the given spot
-  const reviews = await Review.findAll({
-    where: { spotId },
-    include: [
-      {
-        model: User,
-        attributes: ['id', 'firstName', 'lastName']
-      },
-      {
-        model: ReviewImage,
-        attributes: ['id', 'url'],
-      }
-    ]
-  });
-
-  // Finally respond with the reviews
-  res.status(200).json({ Reviews: reviews });
-});
-
 module.exports = router;
