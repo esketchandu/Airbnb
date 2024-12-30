@@ -26,7 +26,7 @@ router.get('/current', requireAuth, async (req, res) => {
             model: SpotImage,
             where: { preview: true },
             attributes: ['url'],
-            required: false, // Include even if no preview image exists
+            required: false, // Includes the spot even if no preview image exists
           },
         ],
       },
@@ -45,7 +45,7 @@ router.get('/current', requireAuth, async (req, res) => {
     if (reviewJSON.Spot && reviewJSON.Spot.SpotImages && reviewJSON.Spot.SpotImages[0]) {
       reviewJSON.Spot.previewImage = reviewJSON.Spot.SpotImages[0].url;
     } else {
-      reviewJSON.Spot.previewImage = null;
+      reviewJSON.Spot.previewImage = null; // if no preview image exists, set previewImage to null
     }
 
     // Remove the nested SpotImages array from the Spot object
@@ -63,6 +63,38 @@ router.get('/current', requireAuth, async (req, res) => {
 
    // Respond with the reviews
   res.status(200).json({ Reviews: formattedReviews });
+});
+
+// Get all Reviews by a Spot's id
+
+router.get('spots/:spotId/reviews', async (req, res) => {
+  const { spotId } = req.params;
+
+  const spot = await Spot.findByPk(spotId)
+
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found"
+    })
+  }
+
+  // Next find all the reviews of the given spot
+  const reviews = await Review.findAll({
+    where: { spotId },
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName']
+      },
+      {
+        model: ReviewImage,
+        attributes: ['id', 'url'],
+      }
+    ]
+  });
+
+  // Finally respond with the reviews
+  res.status(200).json({ Reviews: reviews });
 });
 
 module.exports = router;
