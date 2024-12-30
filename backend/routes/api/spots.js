@@ -383,6 +383,12 @@ router.get('/:spotId/reviews', async (req, res) => {
     ]
   });
 
+  if (reviews.length === 0) {
+    return res.status(404).json({
+      message: "No reviews for this spotId "
+    })
+  }
+
   // Finally respond with the reviews
   res.status(200).json({ Reviews: reviews });
 });
