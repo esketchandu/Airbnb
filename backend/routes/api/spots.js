@@ -421,7 +421,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
   }
 
   // Check if the user has already wrote a review for this spot
-  const existingReview = await Review.findone({
+  const existingReview = await Review.findOne({
     where: {
       spotId,
       userId: user.id,
