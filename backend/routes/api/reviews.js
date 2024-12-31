@@ -113,7 +113,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
 
 });
 
-// Edit a review
+// Edit a review owned by the current logged in user
 
 // Validation middleware to validate the reviews
 const validateReview = [
@@ -154,6 +154,38 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res) => {
 
   // Finally respond with the updated review
   res.status(200).json(existReview);
-})
+});
+
+// Delete a review owned by the current logged in user
+
+router.delete('/:reviewId', requireAuth, async (req, res) => {
+  const { reviewId } = req.params;
+  const { user } = req;
+
+  // Find the review by its reviewId
+  const review = await Review.findByPk(reviewId);
+
+  // Check if the review exists, if not return error message with 404 status
+  if (!review) {
+    return res.status(404).json({
+      message: "Review couldn't be found"
+    })
+  }
+
+  // Check if the current logged in user owns the review
+  if (review.userId !== user.id) {
+    return res.status(403).json({
+      message: "You are not authorized to delete this review"
+    })
+  }
+
+  // If current logged in user owns the review, delete the review
+  await review.destroy()
+
+  // Finally respond with the success message
+  res.status(200).json({
+    message: "Sucessfully deleted"
+  })
+});
 
 module.exports = router;
