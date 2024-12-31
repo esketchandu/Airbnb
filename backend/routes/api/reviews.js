@@ -111,6 +111,49 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     url: reviewImg.url
   })
 
+});
+
+// Edit a review
+
+// Validation middleware to validate the reviews
+const validateReview = [
+  check('review')
+    .notEmpty()
+    .withMessage('Review text is required'),
+  check('stars')
+    .isInt({ min: 1, max: 5})
+    .withMessage('Stars must be an integer from 1 to 5'),
+  handleValidationErrors
+]
+
+router.put('/:reviewId', requireAuth, validateReview, async (req, res) => {
+  const { reviewId } = req.params;
+  const { review, stars } = req.body;
+  const { user } = req;
+
+  // Find the review using the reviewId
+  const existReview = await Review.findByPk(reviewId);
+
+  if (!existReview) {
+    return res.status(404).json({
+      message: "Review couldn't be found"
+    })
+  }
+
+  // Check if the current loggedin user owns the review
+  if (existReview.userId !== user.id) {
+    return res.status(403).json({
+      message: "You are not authorized to edit this review"
+    })
+  }
+
+  // Update the review
+  existReview.review = review
+  existReview.stars = stars
+  await existReview.save();
+
+  // Finally respond with the updated review
+  res.status(200).json(existReview);
 })
 
 module.exports = router;
