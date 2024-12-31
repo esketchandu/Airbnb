@@ -622,7 +622,7 @@ Returns all the reviews written by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * Route path: /api/session/reviews
+  * Route path: /api/reviews/current
   * Body: none
 
 * Successful Response
@@ -811,7 +811,7 @@ Create and return a new image for a review specified by id.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: POST
-  * Route path: /api/reviewImages
+  * Route path: /api/reviews/:reviewId/images
   * Headers:
     * Content-Type: application/json
   * Body:
