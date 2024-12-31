@@ -65,4 +65,52 @@ router.get('/current', requireAuth, async (req, res) => {
   res.status(200).json({ Reviews: formattedReviews });
 });
 
+// Add an image to a review based on the review's id
+
+router.post('/:reviewId/images', requireAuth, async (req, res) => {
+  const { reviewId } = req.params;
+  const { url } = req.body;
+  const { user } = req;
+
+  // Check if the review exists
+  const review = await Review.findByPk(reviewId)
+
+  if (!review) {
+    return res.status(404).json({
+      message: "Review couldn't be found"
+    })
+  }
+
+  // Check if the current loggedin user owns the review
+  if (review.userId !== user.id) {
+    return res.status(403).json({
+      message: "You are not authorized to add images to this review"
+    })
+  }
+
+  // Check if maximum number of images for the review was reached
+  const imgCount = await ReviewImage.count({
+    where: { reviewId }
+  })
+
+  if ( imgCount >=10 ) {
+    return res.status(403).json({
+      message: "Maximum number of images for this resource was reached"
+    })
+  }
+
+  // create the new review image
+  const reviewImg = await ReviewImage.create({
+    reviewId,
+    url
+  })
+
+  // Finally respond with the newly created image
+  res.status(201).json({
+    id: reviewImg.id,
+    url: reviewImg.url
+  })
+
+})
+
 module.exports = router;
