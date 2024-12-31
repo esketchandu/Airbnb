@@ -99,7 +99,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     })
   }
 
-  // create the new review image
+  // Create the new review image
   const reviewImg = await ReviewImage.create({
     reviewId,
     url
