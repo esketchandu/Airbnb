@@ -477,7 +477,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     : [],
     attributes: isOwner
       ? undefined // If the user is the owner, include all attributes
-      : ['spotId', 'strtDate', 'endDate'] // If the user is not the owner, include only these attributes
+      : ['spotId', 'startDate', 'endDate'] // If the user is not the owner, include only these attributes
   });
 
   // Finally respond with the bookings
