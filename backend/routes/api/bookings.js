@@ -56,4 +56,6 @@ router.get('/current', requireAuth, async (req, res) => {
   res.status(200).json({ Bookings: formattedBookings});
 });
 
+//
+
 module.exports = router;
