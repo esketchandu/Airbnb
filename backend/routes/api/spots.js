@@ -1,11 +1,11 @@
 const express = require('express');
-const { Spot, User, SpotImage, Review, ReviewImage, sequelize } = require('../../db/models');
+const { Spot, User, SpotImage, Review, ReviewImage, Booking, sequelize } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { check, validationResult } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
-//Get all spots
+// Get all spots
 
 router.get('/', async (req, res) => {
   const spots = await Spot.findAll({
@@ -443,6 +443,45 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
   });
 
   res.status(201).json(newReview);
+});
+
+// Get all bookings for a spot based on the spot's id
+
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+  const { spotId } = req.params;
+  const { user } = req;
+
+  // Find the spot by the spot's id
+  const spot = await Spot.findByPk(spotId);
+
+  // If the spot doesn't exist, return 404 error message
+  if (!spot) {
+    return res.status(404).json({
+      message: "Spot couldn't be found"
+    })
+  }
+
+  // Next check if the current logged in user owns the spot
+  const isOwner = spot.ownerId === user.id
+
+  // get all the bookings for the spot using the spotId
+  const bookings = await Booking.findAll({
+    where: { spotId },
+    include: isOwner
+    ? [
+      {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName'],
+      }
+      ]
+    : [],
+    attributes: isOwner
+      ? undefined // If the user is the owner, include all attributes
+      : ['spotId', 'strtDate', 'endDate'] // If the user is not the owner, include only these attributes
+  });
+
+  // Finally respond with the bookings
+  res.status(200).json({ Bookings: bookings})
 })
 
 module.exports = router;
