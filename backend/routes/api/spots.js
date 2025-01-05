@@ -549,6 +549,11 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
                 [Sequelize.Op.lte]: startDate,
               },
             },
+            {
+              endDate: {
+                [Sequelize.Op.gte]: endDate,
+              },
+            },
           ],
         },
       ],
