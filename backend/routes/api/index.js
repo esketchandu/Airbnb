@@ -6,7 +6,7 @@ const spotsRouter = require('./spots.js');
 const reviewsRouter = require('./reviews');
 const bookingsRouter = require('./bookings');
 const spotImagesRouter = require('./spotImages');
-// const reviewImagesRouter = require('./reviewImages');
+const reviewImagesRouter = require('./reviewImages');
 
 const { restoreUser } = require("../../utils/auth.js");
 
@@ -30,7 +30,7 @@ router.use('/bookings', bookingsRouter);
 
 router.use('/spot-images', spotImagesRouter);
 
-// router.use('/review-images', reviewImagesRouter);
+router.use('/review-images', reviewImagesRouter);
 
 // Keep this route to test frontend setup in Mod 5
 router.post('/test', (req, res) => {
