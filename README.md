@@ -1,6 +1,6 @@
 # Airbnb
 
-### Render URL [https://eske-pro.onrender.com/api]
+### Render URL [https://eske-pro.onrender.com]
 
 ## Database Schema Design
 
