@@ -9,7 +9,7 @@ router.delete('/review-images/:imageId', requireAuth, async (req, res) => {
   const { imageId } = req.params;
   const { user } = req;
 
-  // Find the reviewimage by using imageId and include the asscoaited review
+  // Find the reviewimage by using imageId and include the associated review
   // Include the userId to check the authorization
   const reviewImage = await ReviewImage.findByPk(imageId, {
     include: {
