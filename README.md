@@ -1309,7 +1309,7 @@ Delete an existing image for a Spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * Route path: /api/spotImages/:imageId
+  * Route path: /api/spot-images/:imageId
   * Body: none
 
 * Successful Response
