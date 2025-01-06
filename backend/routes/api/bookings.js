@@ -157,6 +157,56 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
   // Finally return the updated booking
   res.status(200).json(booking)
-})
+});
+
+// Delete a Booking; Delete an existing booking
+
+router.delete('/:bookingId', requireAuth, async (req, res) => {
+  const { bookingId } = req.params;
+  const { user } = req;
+
+  // Find the booking using the bookingId
+  const booking = await Booking.findByPk(bookingId, {
+    include: {
+      model: Spot,
+      attributes: ['ownerId'],
+    }
+  });
+
+  // Check the booking and if it doesn't exist return 404 error message
+  if (!booking) {
+    return res.status(404).json({
+      message: "Booking couldn't be found"
+    })
+  }
+
+  // Check if the booking has already started
+  const todaysDate = new Date().toISOString().split('T')[0]
+
+  if (new Date(booking.startDate) <= new Date(todaysDate)) {
+    return res.status(403).json({
+      message: "Bookings that have been started can't be deleted",
+    })
+  }
+
+  // Check if the current logged in user is authroized to delete the booking
+  const isOwner = booking.Spot.ownerId === user.id; // to check if Spot belongs to the current user
+  const isBookingUser = booking.userId === user.id; // to check if Booking belongs to the current user
+
+  if(!isOwner && !isBookingUser) {
+    return res.status(403).json({
+      message: "You are not authorized to delete this booking"
+    })
+  }
+
+  // Delete the booking
+  await booking.destroy()
+
+  // Finally respond with the success message
+  return res.status(200).json({
+    message: 'Successfully deleted'
+  })
+
+});
 
 module.exports = router;
