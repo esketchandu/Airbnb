@@ -531,10 +531,10 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
   const exisingBookings = await Booking.findAll({
     where: {
       spotId,
-      [Sequelize.Op.or]: [
+      [sequelize.Op.or]: [
         {
           startDate: {
-            [Sequelize.Op.between]: [startDate, endDate],
+            [sequelize.Op.between]: [startDate, endDate],
           },
         },
         {
@@ -543,15 +543,15 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
           },
         },
         {
-          [Sequelize.Op.and]: [
+          [sequelize.Op.and]: [
             {
               startDate: {
-                [Sequelize.Op.lte]: startDate,
+                [sequelize.Op.lte]: startDate,
               },
             },
             {
               endDate: {
-                [Sequelize.Op.gte]: endDate,
+                [sequelize.Op.gte]: endDate,
               },
             },
           ],

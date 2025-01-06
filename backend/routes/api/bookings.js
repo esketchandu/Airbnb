@@ -109,28 +109,28 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
   // Check if there are booking conflicts
   const conditions = {
     spotId: booking.spotId,
-    id: { [Sequelize.Op.ne]: bookingId }, // This is to exclude the current booking
-    [Sequelize.Op.or]: [
+    id: { [sequelize.Op.ne]: bookingId }, // This is to exclude the current booking
+    [sequelize.Op.or]: [
       {
         startDate: {
-          [Sequelize.Op.between]: [startDate, endDate],
+          [sequelize.Op.between]: [startDate, endDate],
         },
       },
       {
         endDate: {
-          [Sequelize.Op.between]: [startDate, endDate],
+          [sequelize.Op.between]: [startDate, endDate],
         },
       },
       {
-        [Sequelize.Op.and]: [
+        [sequelize.Op.and]: [
           {
             startDate: {
-              [Sequelize.Op.lte]: startDate,
+              [sequelize.Op.lte]: startDate,
             },
           },
           {
             endDate: {
-              [Sequelize.Op.gte]: endDate,
+              [sequelize.Op.gte]: endDate,
             },
           },
         ],
