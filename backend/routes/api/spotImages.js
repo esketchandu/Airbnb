@@ -1,5 +1,5 @@
 const express = require('express');
-const { Spot, User, SpotImage} = require('../../db/models');
+const { Spot, SpotImage} = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.delete('/spot-images/:imageId', requireAuth, async (req, res) => {
     }
   })
 
-  // Check if the spotImage exists, if ir doesn't exist, return 404 error
+  // Check if the spotImage exists, if it doesn't exist, return 404 error
   if (!spotImage) {
     return res.status(404).json({
       message: "Spot Image couldn't be found"
