@@ -3,38 +3,95 @@ const { Spot, User, SpotImage, Review, ReviewImage, Booking, sequelize, Sequeliz
 const { requireAuth } = require('../../utils/auth');
 const { check, validationResult } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { Op } = require('sequelize');
 const router = express.Router();
 
-// Get all spots
+// Get all spots and get all spots with query filters
 
 router.get('/', async (req, res) => {
-  const spots = await Spot.findAll({
-    attributes: {
+  const {
+    page = 1,
+    size = 20,
+    minLat,
+    maxLat,
+    minLng,
+    maxLng,
+    minPrice,
+    maxPrice
+  } = req.query;
+
+  // Perform validation for query parameters
+  const errors = {};
+
+  if (page !== undefined && page < 1) errors.page = 'Page must be greater than or equal to 1'
+  if (size !== undefined && (size < 1 || size > 20)) errors.size = 'Size must be between 1 and 20'
+  if (minLat !== undefined && isNaN(parseFloat(minLat))) errors.minLat = 'Minimum latitude is invalid'
+  if (maxLat !== undefined && isNaN(parseFloat(maxLat))) errors.maxLat = 'Maximum latitude is invalid'
+  if (minLng !== undefined && isNaN(parseFloat(minLng))) errors.minLng = 'Minimum longitude is invalid'
+  if (maxLng !== undefined && isNaN(parseFloat(maxLng))) errors.maxLng = 'Maximum longitude is invalid'
+  if (minPrice !== undefined && (isNaN(parseFloat(minPrice)) || parseFloat(minPrice) < 0)) {
+    errors.minPrice = 'Minimum price must be greater than or equal to 0' }
+  if (maxPrice !== undefined && (isNaN(parseFloat(maxPrice)) || parseFloat(maxPrice) < 0)) {
+    errors.maxPrice = 'Maximum price must be greater than or equal to 0'
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({
+      message: 'Bad Request',
+      errors
+    })
+  }
+
+  const limit = parseInt(size)
+  const offset = (parseInt(page) - 1) * limit;
+
+  const where = {};
+  if (minLat) where.lat = { [Op.gte]: parseFloat(minLat) };
+  if (maxLat) where.lat = { ...where.lat, [Op.lte]: parseFloat(maxLat) };
+  if (minLng) where.lng = { [Op.gte]: parseFloat(minLng) };
+  if (maxLng) where.lng = { ...where.lng, [Op.lte]: parseFloat(maxLng) };
+  if (minPrice) where.price = { [Op.gte]: parseFloat(minPrice) };
+  if (maxPrice) where.price = { ...where.price, [Op.lte]: parseFloat(maxPrice) };
+
+    const spots = await Spot.findAll({
+      where,
+      limit,
+      offset,
       include: [
-        // Calculate the average rating using a subquery
-        [
-          sequelize.literal(`(
-            SELECT AVG("stars")
-            FROM "Reviews"
-            WHERE "Reviews"."spotId" = "Spot"."id"
-          )`),
-          'avgRating'
-        ],
-        // Include the preview image URL using a subquery
-        [
-          sequelize.literal(`(
-            SELECT "url"
-            FROM "SpotImages"
-            WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true
-            LIMIT 1
-          )`),
-          'previewImage'
+        {
+          model: Review,
+          attributes: [],
+        },
+      ],
+      attributes: {
+        include: [
+          // Calculate the average rating using a subquery
+          [
+            sequelize.literal(`(
+              SELECT AVG("stars")
+              FROM "Reviews"
+              WHERE "Reviews"."spotId" = "Spot"."id"
+            )`),
+            'avgRating'
+          ],
+          // Include the preview image URL using a subquery
+          [
+            sequelize.literal(`(
+              SELECT "url"
+              FROM "SpotImages"
+              WHERE "SpotImages"."spotId" = "Spot"."id" AND "SpotImages"."preview" = true
+              LIMIT 1
+            )`),
+            'previewImage'
+          ]
         ]
-      ]
     }
   });
 
-  res.status(200).json({ Spots: spots });
+  res.status(200).json({
+    Spots: spots,
+    page: parseInt(page),
+    size: parseInt(size) });
 });
 
 // Get all Spots owned by the current user
