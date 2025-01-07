@@ -88,8 +88,20 @@ router.get('/', async (req, res) => {
     }
   });
 
-  res.status(200).json({
-    Spots: spots,
+  // Format the spots to ensure numeric values are returned as numbers
+  const formattedSpots = spots.map((spot) => {
+    const spotJSON = spot.toJSON();
+    return {
+      ...spotJSON,
+      lat: parseFloat(spotJSON.lat),
+      lng: parseFloat(spotJSON.lng),
+      price: parseFloat(spotJSON.price),
+      avgRating: spotJSON.avgRating !== null ? parseFloat(spotJSON.avgRating) : null,
+    };
+  });
+
+    res.status(200).json({
+    Spots: formattedSpots,
     page: parseInt(page),
     size: parseInt(size) });
 });
