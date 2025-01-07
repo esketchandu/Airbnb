@@ -6,7 +6,7 @@
 
 ![db-schema]
 
-[db-schema]: ./images/databaseSchemaNew.png
+[db-schema]: ./images/databaseSchemaNew.PNG
 
 ## API Documentation
 
