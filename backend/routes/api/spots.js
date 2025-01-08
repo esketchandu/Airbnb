@@ -367,17 +367,17 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res) => {
     });
   }
 
-  // Update the spot
-  await spot.update({
-    address: spot.address,
-    city: spot.city,
-    state: spot.state,
-    country: spot.country,
-    lat: spot.lat,
-    lng: spot.lng,
-    name: spot.name,
-    description: spot.description,
-    price: spot.price
+  // Update the spot with the new values from the request body
+    await spot.update({
+    address: address,
+    city: city,
+    state: state,
+    country: country,
+    lat: lat,
+    lng: lng,
+    name: name,
+    description: description,
+    price: price
   });
 
   const formattedSpotEdit = {
