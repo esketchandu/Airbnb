@@ -368,17 +368,23 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res) => {
   }
 
   // Update the spot with the new values from the request body
-    await spot.update({
-    address: address,
-    city: city,
-    state: state,
-    country: country,
-    lat: lat,
-    lng: lng,
-    name: name,
-    description: description,
-    price: price
-  });
+    await spot.update(
+    {
+      address: address,
+      city: city,
+      state: state,
+      country: country,
+      lat: lat,
+      lng: lng,
+      name: name,
+      description: description,
+      price: price
+    },
+    {
+      // Exclude explicitly createdAt from being updated
+      fields: ['address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price']
+    }
+  );
 
   const formattedSpotEdit = {
     ...spot.toJSON(), // Includes all regular attributes and associations
