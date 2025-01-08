@@ -37,6 +37,13 @@ router.get('/current', requireAuth, async (req, res) => {
     ],
   });
 
+  // check if reviews are empty for current user and return appropriate message
+    if (reviews.length === 0) {
+      return res.status(404).json({
+        message: 'Current user do not have reviews'
+      })
+    }
+
   // Format the response
   const formattedReviews = reviews.map((review) => {
     const reviewJSON = review.toJSON();
