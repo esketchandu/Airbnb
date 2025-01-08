@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Delete a Review Image; delete an existing image for a Review
 
-router.delete('/review-images/:imageId', requireAuth, async (req, res) => {
+router.delete('/:imageId', requireAuth, async (req, res) => {
   const { imageId } = req.params;
   const { user } = req;
 
