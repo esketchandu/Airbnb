@@ -5,6 +5,7 @@ import './index.css';
 import { Provider } from 'react-redux';
 import configureStore from './store/store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
+import * as sessionActions from './store/session';
 
 
 // This creates the Redux store
@@ -20,6 +21,7 @@ if (import.meta.env.MODE !== 'production') {
 
   window.csrfFetch = csrfFetch;
   window.store = store;
+  window.sessionActions = sessionActions;
 }
 
 // This is to Render the app

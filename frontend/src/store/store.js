@@ -2,13 +2,14 @@
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import {thunk} from 'redux-thunk'; // This is how this should be imported for Vite + redux-thunk
+import sessionReducer from './session';
 
 
 
 
 // ...
 const rootReducer = combineReducers({
-
+  session: sessionReducer
 });
 
 // ...
