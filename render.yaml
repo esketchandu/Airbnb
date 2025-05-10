@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: eske-pro
+    env: node
+    plan: free
+    buildCommand: >
+      npm install &&
+      npm run build &&
+      npm run sequelize --prefix backend db:migrate:undo:all &&
+      npm run sequelize --prefix backend db:migrate &&
+      psql "$DATABASE_URL" -c "DELETE FROM \\\"airbnb_schema\\\".\\\"Users\\\";" &&
+      npm run sequelize --prefix backend db:seed:all
+    startCommand: npm start --prefix backend
+    rootDir: .
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SCHEMA
+        value: airbnb_schema
