@@ -18,4 +18,16 @@ module.exports = {
     ],
     'react/prop-types': 'off'
   },
+  // This is added based on Phase-4
+
+  overrides: [
+ {
+   files: [
+     "src/context/*.jsx"
+   ],
+   rules: {
+     'react-refresh/only-export-components': 'off'
+   }
+ }
+],
 }
