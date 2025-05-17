@@ -55,3 +55,14 @@ export default function spotsReducer(state = initialState, action) {
 
   }
 }
+
+// spots thunk to fetch all spots
+
+export const fetchAllSpots = () => async(dispatch) => {
+  const res = await fetch('/api/spots')
+
+  if(res.ok){
+    const data = await res.json()
+    dispatch(loadSpots(data.Spots));
+  }
+};
