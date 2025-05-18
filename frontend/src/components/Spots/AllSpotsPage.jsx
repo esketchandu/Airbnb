@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { fetchAllSpots } from "../../store/spots";
 import {Link} from 'react-router-dom';
+import './AllSpotsPage.css'
 
 function AllSpotsPage() {
   const dispatch = useDispatch();
-
   const spots = useSelector((state) => state.spots || {});
   const spotsArray = Object.values(spots);
 
@@ -17,22 +17,28 @@ function AllSpotsPage() {
   // if (!spotsArray.length) {
   //   return <p>Loading spots...</p>;
   // }
-  console.log("Spots from Redux:", spotsArray); // this is to troubeshoot
+
   return(
-    <div>
+    <div className="spots-page">
       <h1>Explore Spots</h1>
       <div className="spots-grid">
         {spotsArray.map(spot => (
-          <div key={spot.id} className="spot-card">
-            <Link to={`/spots/${spot.id}`}>
-            <img src={spot.previewImage} alt={spot.name} style={{width: '300px', height: '200px', objectFit: 'cover'}} />
-            <h3>{spot.name}</h3>
-            <p>{spot.city}, {spot.state}</p>
-            <p>Price: ${spot.price} per night</p>
-            <p>Rating: {spot.avgRating ? spot.avgRating.toFixed(1) : 'New'}</p>
+          <Link to={`/spots/${spot.id}`} className="spot-card" key={spot.id} title={spot.name}>
+            <img
+              className="spot-image"
+              src={spot.previewImage}
+              alt={spot.name}
+              style={{ width: '300px', height: '200px', objectFit: 'cover' }}
+            />
+            <div className="spot-info">
+              <div className="spot-location-rating">
+                <span className="spot-location">{spot.city}, {spot.state}</span>
+                <span className="spot-rating">★ {spot.avgRating ? spot.avgRating.toFixed(1) : 'New'}</span>
+              </div>
+              <p className="spot-price"><strong>${spot.price}</strong> night</p>
+              </div>
             </Link>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );
