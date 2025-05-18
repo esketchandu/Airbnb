@@ -59,12 +59,10 @@ export default function spotsReducer(state = initialState, action) {
 // spots thunk to fetch all spots
 
 export const fetchAllSpots = () => async(dispatch) => {
-  console.log("Fetching spots..."); // added for debuging
   const res = await fetch('/api/spots')
 
   if(res.ok){
     const data = await res.json()
-    console.log("Fetched spots:", data); // added for debuging
     dispatch(loadSpots(data.Spots));
   }
 };
