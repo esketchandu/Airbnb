@@ -14,7 +14,7 @@ function SpotDetailPage() {
   }, [dispatch, spotId]);
 
 // check if spot data has not loaded yet
-  if (!spot) {
+  if (!spot || !spot.SpotImages) {
     return (
     <div>
       <p>Loading spot details...</p>
@@ -22,7 +22,7 @@ function SpotDetailPage() {
     )
   }
   const previewImage = spot.SpotImages?.find(img => img.preview)?.url;
-  const additionalImages = spot.SpotImages?.filter(img => !img.preview).slice(0, 4);
+  const additionalImages = spot.SpotImages ? spot.SpotImages.filter(img => !img.preview).slice(0, 4) : [];
 
   return (
     <div className="spot-detail-page">
