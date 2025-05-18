@@ -8,6 +8,7 @@ import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import { Modal, ModalProvider } from './context/Modal';
 
+
 // This creates the Redux store
 const store = configureStore();
 
@@ -20,7 +21,7 @@ if (import.meta.env.MODE !== 'production') {
   restoreCSRF();
 
   window.csrfFetch = csrfFetch;
-  window.store = store;
+  window.configureStore = store;
   window.sessionActions = sessionActions;
 }
 

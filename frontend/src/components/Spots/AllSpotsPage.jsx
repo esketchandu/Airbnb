@@ -6,14 +6,18 @@ import {Link} from 'react-router-dom';
 function AllSpotsPage() {
   const dispatch = useDispatch();
 
-  const spots = useSelector((state) => state.spots);
-
-  const spotsArray = object.values(spots);
+  const spots = useSelector((state) => state.spots || {});
+  const spotsArray = Object.values(spots);
 
   useEffect(() => {
     dispatch(fetchAllSpots());
   }, [dispatch]);
 
+  //
+  // if (!spotsArray.length) {
+  //   return <p>Loading spots...</p>;
+  // }
+  console.log("Spots from Redux:", spotsArray); // this is to troubeshoot
   return(
     <div>
       <h1>Explore Spots</h1>

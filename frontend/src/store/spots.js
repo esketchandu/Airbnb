@@ -32,24 +32,24 @@ const initialState = {}
 
 export default function spotsReducer(state = initialState, action) {
   switch(action.type) {
-    case load_spots:
+    case load_spots:{
       const allSpots = {};
       action.spots.forEach(spot => {
         allSpots[spot.id] = spot;
       });
       return allSpots;
-
+    }
     case add_spot:
       return{...state, [action.spot.id]: action.spot};
 
     case update_spot:
       return {...state, [action.spot.id]: action.spot};
 
-    case delete_spot:
+    case delete_spot:{
       const newState = {...state}
       delete newState[action.spotId]
       return newState;
-
+    }
     default:
       return state;
 
@@ -59,10 +59,12 @@ export default function spotsReducer(state = initialState, action) {
 // spots thunk to fetch all spots
 
 export const fetchAllSpots = () => async(dispatch) => {
+  console.log("Fetching spots..."); // added for debuging
   const res = await fetch('/api/spots')
 
   if(res.ok){
     const data = await res.json()
+    console.log("Fetched spots:", data); // added for debuging
     dispatch(loadSpots(data.Spots));
   }
 };
