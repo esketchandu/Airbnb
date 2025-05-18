@@ -1,0 +1,93 @@
+.spot-detail-page {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 0 20px;
+  font-family: Arial, sans-serif;
+}
+
+.spot-detail-page h1{
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.spot-location{
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.spot-images{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.main-image{
+  flex: 1 1 60%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.small-images{
+  display: flex;
+  flex: 1 1 35%;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.small-images img{
+  width: 48%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.spot-detail-body {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.spot-description {
+  flex: 1;
+}
+
+.spot-description h2 {
+  margin-bottom: 10px;
+}
+
+.spot-description p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.spot-callout-box {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  height: fit-content;
+}
+
+.spot-callout-box p {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.spot-callout-box button {
+  background-color: #ff385c;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.spot-callout-box button:hover {
+  background-color: #e11c4f;
+}
