@@ -87,3 +87,21 @@ export const fetchSpotDetails = (spotId) => async(dispatch) => {
     dispatch(loadSpotDetails(spot));
   }
 };
+
+// thunk to create a new spot
+
+export const createSpot = (spotData) => async(dispatch) => {
+  const res = await fetch('api/spots', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json' },
+    body: JSON.stringify(spotData)
+  });
+  if(res.ok) {
+    const newSpot =await res.json()
+    dispatch(addSpot(newSpot));
+    return newSpot
+  } else {
+    const errors = await res.json();
+    return Promise.reject(errors)
+  }
+}
