@@ -78,18 +78,18 @@ function CreateSpotForm(){
       <h1>Create a New Spot</h1>
 
       {/* Information related to location */}
-      <h2>Where`&apos;` your place located?</h2>
+      <h2>Where&apos;s your place located?</h2>
       <p>Guests will only get your exact address once they booked a reservation.</p>
-      <input placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
+      <input type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
       {errors.country && <p className="error">{errors.country}</p>}
 
-      <input placeholder="Street Address" value={address} onChange={(e) => setAddress(e.target.value)} />
+      <input type="text" placeholder="Street Address" value={address} onChange={(e) => setAddress(e.target.value)} />
       {errors.address && <p className="error">{errors.address}</p>}
 
-      <input placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
+      <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
       {errors.city && <p className="error">{errors.city}</p>}
 
-      <input placeholder="State" value={state} onChange={(e) => setState(e.target.value)} />
+      <input type="text" placeholder="State" value={state} onChange={(e) => setState(e.target.value)} />
       {errors.state && <p className="error">{errors.state}</p>}
 
       <input placeholder="Latitude (optional)" value={lat} onChange={(e) => setLat(e.target.value)} />
@@ -103,8 +103,8 @@ function CreateSpotForm(){
 
       {/* Information related to title */}
       <h2>Create a title for your spot</h2>
-      <p>Catch guests`&apos;` attention with a spot title that highlights what makes your place special.</p>
-      <input placeholder="Name of your spot" value={name} onChange={(e) => setName(e.target.value)} />
+      <p>Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
+      <input type="text" placeholder="Name of your spot" value={name} onChange={(e) => setName(e.target.value)} />
       {errors.name && <p className="error">{errors.name}</p>}
 
       {/* Information related to price */}
@@ -116,7 +116,7 @@ function CreateSpotForm(){
       {/* Information related to Image */}
       <h2>Liven up your spot with photos</h2>
       <p>Submit a link to at least one photo to publish your spot.</p>
-      <input placeholder="Preview Image URL" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} />
+      <input type="text" placeholder="Preview Image URL" value={previewImage} onChange={(e) => setPreviewImage(e.target.value)} />
       {errors.previewImage && <p className="error">{errors.previewImage}</p>}
 
       <input placeholder="Image URL" value={image1} onChange={(e) => setImage1(e.target.value)} />
