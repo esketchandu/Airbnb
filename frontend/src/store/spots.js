@@ -96,6 +96,7 @@ export const createSpot = (spotData) => async(dispatch) => {
     headers: {'Content-Type': 'application/json' },
     body: JSON.stringify(spotData)
   });
+
   if(res.ok) {
     const newSpot =await res.json()
     dispatch(addSpot(newSpot));
