@@ -1,3 +1,5 @@
+import { csrfFetch } from "./csrf";
+
 // Action Types
 const load_spots = 'spots/load_spots';
 const add_spot = 'spots/add_spot';
@@ -91,18 +93,57 @@ export const fetchSpotDetails = (spotId) => async(dispatch) => {
 // thunk to create a new spot
 
 export const createSpot = (spotData) => async(dispatch) => {
-  const res = await fetch('api/spots', {
+  try {
+  const res = await csrfFetch('/api/spots', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json' },
-    body: JSON.stringify(spotData)
+    headers: {'Content-Type': 'application/json'},
+    credentials: 'include',
+    body: JSON.stringify({
+      address: spotData.address,
+      city: spotData.city,
+      state: spotData.state,
+      country: spotData.country,
+      lat: spotData.lat,
+      lng: spotData.lng,
+      name: spotData.name,
+      description: spotData.description,
+      price: spotData.price
+    })
   });
 
-  if(res.ok) {
-    const newSpot =await res.json()
-    dispatch(addSpot(newSpot));
-    return newSpot
-  } else {
-    const errors = await res.json();
-    return Promise.reject(errors)
+  if(!res.ok) {
+    const errorData = await res.json()
+    throw errorData
+  }
+
+  const newSpot = await res.json()
+
+  const imageUrls = [
+    {url: spotData.previewImage, preview: true},
+    ...(spotData.image1 ? [{url: spotData.image1, preview: false}] : []),
+    ...(spotData.image2 ? [{url: spotData.image2, preview: false}] : []),
+    ...(spotData.image3 ? [{url: spotData.image3, preview: false}] : []),
+    ...(spotData.image4 ? [{url: spotData.image4, preview: false}] : [])
+  ]
+
+  for(let img of imageUrls) {
+    await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(img)
+    })
+
+    if(img.preview === true){
+      newSpot.previewImage = img.url // this is to make sure that newSpot gets previewImage when added to redux
+    }
+  }
+
+  // Next is to dispatch to redux so the new spot will appear in the all spots list
+  dispatch(addSpot(newSpot))
+
+  return newSpot
+} catch(err) {
+  throw err;
   }
 }
