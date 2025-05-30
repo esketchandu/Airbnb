@@ -1,3 +1,5 @@
+import { csrfFetch } from "./csrf";
+
 // Action Types
 const load_spots = 'spots/load_spots';
 const add_spot = 'spots/add_spot';
@@ -92,7 +94,7 @@ export const fetchSpotDetails = (spotId) => async(dispatch) => {
 
 export const createSpot = (spotData) => async(dispatch) => {
   try {
-  const res = await fetch('/api/spots', {
+  const res = await csrfFetch('/api/spots', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     credentials: 'include',
@@ -125,7 +127,7 @@ export const createSpot = (spotData) => async(dispatch) => {
   ]
 
   for(let img of imageUrls) {
-    await fetch(`/api/spots/${newSpot.id}/images`, {
+    await csrfFetch(`/api/spots/${newSpot.id}/images`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json' },
       credentials: 'include',
