@@ -93,7 +93,7 @@ export const fetchSpotDetails = (spotId) => async(dispatch) => {
 // thunk to create a new spot
 
 export const createSpot = (spotData) => async(dispatch) => {
-  try {
+
   const res = await csrfFetch('/api/spots', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -143,7 +143,4 @@ export const createSpot = (spotData) => async(dispatch) => {
   dispatch(addSpot(newSpot))
 
   return newSpot
-} catch(err) {
-  throw err;
-  }
 }
