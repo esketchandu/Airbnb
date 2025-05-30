@@ -133,7 +133,15 @@ export const createSpot = (spotData) => async(dispatch) => {
       credentials: 'include',
       body: JSON.stringify(img)
     })
+
+    if(img.preview === true){
+      newSpot.previewImage = img.url // this is to make sure that newSpot gets previewImage when added to redux
+    }
   }
+
+  // Next is to dispatch to redux so the new spot will appear in the all spots list
+  dispatch(addSpot(newSpot))
+
   return newSpot
 } catch(err) {
   throw err;
