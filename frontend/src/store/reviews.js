@@ -18,12 +18,13 @@ const initialState = {};
 
 export default function reviewsReducer(state = initialState, action) {
   switch (action.type) {
-    case set_reviews:
+    case set_reviews: {
       const reviewsState = {};
       action.reviews.forEach(review => {
         reviewsState[review.id] = review;
       });
       return reviewsState;
+    }
     default:
       return state;
   }
