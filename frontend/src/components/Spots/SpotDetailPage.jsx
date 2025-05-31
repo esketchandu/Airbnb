@@ -3,14 +3,17 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSpotDetails } from "../../store/spots";
 import './SpotDetailPage.css';
+import { loadReviews } from "../../store/reviews";
 
 function SpotDetailPage() {
   const { spotId } = useParams()
   const dispatch = useDispatch()
   const spot = useSelector(state => state.spots[spotId])
+  const reviews = useSelector(state => state.reviews[spotId]) || [];
 
   useEffect(() => {
     dispatch(fetchSpotDetails(spotId));
+    dispatch(loadReviews(spotId));
   }, [dispatch, spotId]);
 
 // check if spot data has not loaded yet
@@ -49,6 +52,21 @@ function SpotDetailPage() {
           <button onClick={() => alert('Feature coming soon')}>Reserve</button>
         </div>
       </div>
+
+      <div className="spot-reviews-section">
+        <h2>Reviews</h2>
+        {reviews.length === 0 ? (
+          <p>Be the first to post a review!</p>
+       ) : (
+         reviews.map(review => (
+            <div key={review.id} className="review-item">
+              <p><strong>{review.User?.firstName}</strong></p>
+              <p>{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</p>
+              <p>{review.review}</p>
+      </div>
+    ))
+  )}
+</div>
     </div>
   );
 }
