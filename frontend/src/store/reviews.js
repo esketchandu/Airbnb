@@ -25,6 +25,12 @@ export default function reviewsReducer(state = initialState, action) {
       });
       return reviewsState;
     }
+    case add_review: {
+      return{
+        ...state,
+        [action.review.id]: action.review
+      };
+    }
     default:
       return state;
   }
@@ -35,7 +41,8 @@ const add_review = 'reviews/add_review'
 
 // These are Action creator for review
 const addReview = (review) => ({
-  type: add_reviewreview
+  type: add_review,
+  review
 })
 
 // Thunk to create a review
