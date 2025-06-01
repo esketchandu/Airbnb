@@ -29,3 +29,28 @@ export default function reviewsReducer(state = initialState, action) {
       return state;
   }
 }
+
+// Action type
+const add_review = 'reviews/add_review'
+
+// These are Action creator for review
+const addReview = (review) => ({
+  type: add_reviewreview
+})
+
+// These are reducers for review
+export const createReviewThunk = (spotId, reviewData) => async(dispatch) => {
+  const res = await fetch(`/api/spots/${spotId}/reviews`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(reviewData)
+  });
+
+  if(res.ok){
+    const newReview = await res.json()
+    dispatch(addReview(newReview))
+    return newReview
+  } else {
+    throw res
+  }
+}
