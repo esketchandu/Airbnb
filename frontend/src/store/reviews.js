@@ -25,6 +25,12 @@ export default function reviewsReducer(state = initialState, action) {
       });
       return reviewsState;
     }
+    case add_review: {
+      return{
+        ...state,
+        [action.review.id]: action.review
+      };
+    }
     default:
       return state;
   }
@@ -35,7 +41,8 @@ const add_review = 'reviews/add_review'
 
 // These are Action creator for review
 const addReview = (review) => ({
-  type: add_reviewreview
+  type: add_review,
+  review
 })
 
 // Thunk to create a review
@@ -47,11 +54,13 @@ export const createReviewThunk = (spotId, reviewData) => async(dispatch) => {
     body: JSON.stringify(reviewData)
   });
 
-  if(res.ok){
-    const newReview = await res.json()
-    dispatch(addReview(newReview))
-    return newReview
-  } else {
-    throw res
+  if(!res.ok){
+    const errorData = await res.json()
+    throw errorData
   }
+
+  // Next is to dispatch to redux so the new review for the spot is added
+  const newReview = await res.json()
+  dispatch(addReview(newReview))
+  return newReview
 }
