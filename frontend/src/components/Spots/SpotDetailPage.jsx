@@ -4,11 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSpotDetails } from "../../store/spots";
 import './SpotDetailPage.css';
 import { loadReviews } from "../../store/reviews";
+import OpenModalButton from "../OpenModalButton";
+import PostReview from "../PostReview";
+import { useSelector } from "react-redux";
 
 function SpotDetailPage() {
   const { spotId } = useParams()
   const dispatch = useDispatch()
   const spot = useSelector(state => state.spots[spotId])
+  const sessionUser = useSelector(state => state.session.user)
   const allReviews = useSelector(state => Object.values(state.reviews)) || [];
   const reviews = allReviews.filter(review => review.spotId === +spotId)
 
@@ -16,6 +20,10 @@ function SpotDetailPage() {
     dispatch(fetchSpotDetails(spotId));
     dispatch(loadReviews(spotId));
   }, [dispatch, spotId]);
+
+  // To check if user has not reviewed the spot and user is owner
+  const hasReviewed = reviews.some(review => review.userId === sessionUser?.id);
+  const isOwner = spot?.ownerId === sessionUser?.id;
 
 // check if spot data has not loaded yet
   if (!spot || !spot.SpotImages) {
