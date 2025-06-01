@@ -9,7 +9,8 @@ function SpotDetailPage() {
   const { spotId } = useParams()
   const dispatch = useDispatch()
   const spot = useSelector(state => state.spots[spotId])
-  const reviews = useSelector(state => state.reviews[spotId]) || [];
+  const allReviews = useSelector(state => Object.values(state.reviews)) || [];
+  const reviews = allReviews.filter(review => review.spotId === +spotId)
 
   useEffect(() => {
     dispatch(fetchSpotDetails(spotId));
