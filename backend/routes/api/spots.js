@@ -458,14 +458,14 @@ router.get('/:spotId/reviews', async (req, res) => {
     ]
   });
 
-  if (reviews.length === 0) {
-    return res.status(404).json({
-      message: "No reviews for this spotId"
-    })
-  }
+  // if (reviews.length === 0) {
+  //   return res.status(404).json({
+  //     Reviews: reviews
+  //   })
+  // }
 
   // Finally respond with the reviews
-  res.status(200).json({ Reviews: reviews });
+  return res.status(200).json({ Reviews: reviews });
 });
 
 // Create a Review for a Spot based on the Spot's id
