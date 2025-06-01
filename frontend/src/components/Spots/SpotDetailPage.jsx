@@ -69,6 +69,12 @@ function SpotDetailPage() {
       </div>
 
       <div className="spot-reviews-section">
+        {sessionUser && !isOwner && !hasReviewed (
+          <OpenModalButton
+            buttonText="Post Your Review"
+            modalComponenet={<PostReview spotId={spotId} />}
+            />
+        )}
         <h2>
           <span>★</span>{' '}
           {spot.numReviews === 0
