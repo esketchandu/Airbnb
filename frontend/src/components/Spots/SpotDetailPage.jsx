@@ -51,8 +51,10 @@ function SpotDetailPage() {
         <div className="spot-callout-box">
           <p><strong>${spot.price}</strong> per night</p>
           <p>
-            <span>★</span>{' '}
-            {spot.numReviews === 0 ? 'New' : `${spot.avgStarRating.toFixed(1)} . ${spot.numReviews} ${spot.numReviews === 1} ? 'Review' : 'Reviews'}` }
+             <span>★</span>{' '}
+             {spot.numReviews === 0
+              ? 'New'
+              : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} ${spot.numReviews === 1 ? 'Review' : 'Reviews'}`}
           </p>
           <button onClick={() => alert('Feature coming soon')}>Reserve</button>
         </div>
@@ -61,7 +63,9 @@ function SpotDetailPage() {
       <div className="spot-reviews-section">
         <h2>
           <span>★</span>{' '}
-          {spot.numReviews === 0 ? 'New' : `${spot.avgStarRating.toFixed(1)} . ${spot.numReviews} ${spot.numReviews === 1 ? 'Review' : 'Reviews'} `}
+          {spot.numReviews === 0
+            ? 'New'
+            : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} ${spot.numReviews === 1 ? 'Review' : 'Reviews'}`}
         </h2>
         {reviews.length === 0 ? (
           <p>Be the first to post a review!</p>
