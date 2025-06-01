@@ -47,11 +47,13 @@ export const createReviewThunk = (spotId, reviewData) => async(dispatch) => {
     body: JSON.stringify(reviewData)
   });
 
-  if(res.ok){
-    const newReview = await res.json()
-    dispatch(addReview(newReview))
-    return newReview
-  } else {
-    throw res
+  if(!res.ok){
+    const errorData = await res.json()
+    throw errorData
   }
+
+  // Next is to dispatch to redux so the new review for the spot is added
+  const newReview = await res.json()
+  dispatch(addReview(newReview))
+  return newReview
 }
