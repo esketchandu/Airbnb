@@ -26,10 +26,10 @@ function PostReview({ spotId, onClose }) {
     try {
       await dispatch(createReviewThunk(spotId, { review, stars })); // disptach thunk to post the review
       if (onClose) onClose(); // Close modal after successful submission
-    } catch (res) {
+    } catch (err) {
       // check for error and if there is error parse and display the error
       const data = await res.json();
-      if (data?.errors) setErrors(data.errors);
+      if (err?.errors) setErrors(err.errors);
       else setErrors(["Something went wrong. Please try again."]);
     }
   };
