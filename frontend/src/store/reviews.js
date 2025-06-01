@@ -38,11 +38,12 @@ const addReview = (review) => ({
   type: add_reviewreview
 })
 
-// These are reducers for review
+// Thunk to create a review
 export const createReviewThunk = (spotId, reviewData) => async(dispatch) => {
   const res = await fetch(`/api/spots/${spotId}/reviews`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify(reviewData)
   });
 
