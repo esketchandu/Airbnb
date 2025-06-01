@@ -1,3 +1,4 @@
+/* This is for the container for the entire spot detail page*/
 .spot-detail-page {
   max-width: 1000px;
   margin: 20px auto;
@@ -5,17 +6,20 @@
   font-family: Arial, sans-serif;
 }
 
+/* This is for Title */
 .spot-detail-page h1{
   font-size: 28px;
   margin-bottom: 5px;
 }
 
+/* This is for Location below the title */
 .spot-location{
   font-size: 16px;
   color: #666;
   margin-bottom: 20px;
 }
 
+/* This is for the Main image + additional images */
 .spot-images{
   display: flex;
   flex-wrap: wrap;
@@ -43,6 +47,7 @@
   border-radius: 5px;
 }
 
+/* This is for Spot details body */
 .spot-detail-body {
   display: flex;
   justify-content: space-between;
@@ -58,11 +63,12 @@
   margin-bottom: 10px;
 }
 
-/* .spot-description p {
-  font-size: 16px;
-  line-height: 1.5;
-} */
+.spot-description p {
+  font-size: 14px;
+  line-height: 1.6;
+}
 
+/* This is for Callout box for price and reserve button */
 .spot-callout-box {
   flex: 0 0 250px;
   border: 1px solid #ccc;
@@ -89,4 +95,26 @@
 
 .spot-callout-box button:hover {
   background-color: #e0484d;
+}
+
+/* Reviews section */
+.spot-reviews-section {
+  margin-top: 30px;
+}
+
+.spot-reviews-section h2 {
+  font-size: 18pt;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.review-item {
+  border-bottom: 1px solid #CCCCCC;
+  padding: 15px 0;
+}
+
+.review-item p {
+  margin: 5px 0;
+  font-size: 14pt;
+  line-height: 1.5;
 }
