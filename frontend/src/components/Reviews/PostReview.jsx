@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createReviewThunk } from "../store/reviews";
+import './PostReview.css';
 
 
 function PostReview({ spotId, onClose }) {
@@ -32,6 +33,51 @@ function PostReview({ spotId, onClose }) {
       else setErrors(["Something went wrong. Please try again."]);
     }
   };
+
+return (
+    <div className="post-review-modal">
+      <h2>How was your stay?</h2>
+
+      {/* Error display section */}
+      {errors.length > 0 && (
+        <ul className="errors">
+          {errors.map((err, idx) => <li key={idx}>{err}</li>)}
+        </ul>
+      )}
+
+      {/* Review Form */}
+      <form onSubmit={handleSubmit}>
+        {/* This is for the textarea input for review comment */}
+        <textarea
+          placeholder="Leave your review here..."
+          value={review}
+          onChange={(e) => setReview(e.target.value)}
+        />
+
+        {/* Star rating input */}
+        <div className="star-input">
+          {[1, 2, 3, 4, 5].map((num) => (
+            <span
+              key={num}
+              className={num <= (hoveredStar || stars) ? "filled" : "empty"}
+              onClick={() => setStars(num)}
+              onMouseEnter={() => setHoveredStar(num)}
+              onMouseLeave={() => setHoveredStar(0)}
+            >★</span>
+          ))}
+          <span> Stars</span>
+        </div>
+
+        {/* Submit button is disabled if requirements are not met */}
+        <button
+          type="submit"
+          disabled={review.length < 10 || stars === 0}
+        >
+          Submit Your Review
+        </button>
+      </form>
+    </div>
+  );
 
 }
 
