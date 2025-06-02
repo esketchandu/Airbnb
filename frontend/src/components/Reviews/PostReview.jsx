@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createReviewThunk } from "../store/reviews";
+import { createReviewThunk } from "../../store/reviews";
 import './PostReview.css';
 
 
@@ -26,10 +26,9 @@ function PostReview({ spotId, onClose }) {
     try {
       await dispatch(createReviewThunk(spotId, { review, stars })); // disptach thunk to post the review
       if (onClose) onClose(); // Close modal after successful submission
-    } catch (err) {
+    } catch (data) {
       // check for error and if there is error parse and display the error
-      const data = await res.json();
-      if (err?.errors) setErrors(err.errors);
+      if (data?.errors) setErrors(data.errors);
       else setErrors(["Something went wrong. Please try again."]);
     }
   };

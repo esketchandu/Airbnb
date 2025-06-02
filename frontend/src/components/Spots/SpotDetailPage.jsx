@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSpotDetails } from "../../store/spots";
 import './SpotDetailPage.css';
 import { loadReviews } from "../../store/reviews";
-import OpenModalButton from "../OpenModalButton";
-import PostReview from "../PostReview";
-import { useSelector } from "react-redux";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
+import PostReview from "../Reviews/PostReview";
 
 function SpotDetailPage() {
   const { spotId } = useParams()
