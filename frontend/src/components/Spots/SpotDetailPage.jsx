@@ -71,8 +71,8 @@ function SpotDetailPage() {
         {sessionUser && !isOwner && !hasReviewed (
           <OpenModalButton
             buttonText="Post Your Review"
-            modalComponent={<PostReview spotId={spotId} />}
-            />
+            modalComponent={() => <PostReview spotId={spotId} />}
+          />
         )}
         <h2>
           <span>★</span>{' '}
