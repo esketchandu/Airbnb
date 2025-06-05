@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
 import { createReviewThunk } from "../../store/reviews";
 import './PostReview.css';
 
 
-function PostReview({ spotId, onClose }) {
+function PostReview({ spotId }) {
   const dispatch = useDispatch();
+  const { closeModal } = useModal()
   // These are local state for review text, star rating, error messages and hover state
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
@@ -25,8 +27,8 @@ function PostReview({ spotId, onClose }) {
 
     try {
       await dispatch(createReviewThunk(spotId, { review, stars })); // disptach thunk to post the review
-      if (onClose) onClose(); // Close modal after successful submission
-    } catch (data) {
+      closeModal() // Close modal after successful submission
+      } catch (data) {
       // check for error and if there is error parse and display the error
       if (data?.errors) setErrors(data.errors);
       else setErrors(["Something went wrong. Please try again."]);
