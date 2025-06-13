@@ -69,7 +69,7 @@ export default function spotsReducer(state = initialState, action) {
   }
 }
 
-// spots thunk to fetch all spots
+// thunk to fetch all spots
 
 export const fetchAllSpots = () => async(dispatch) => {
   const res = await fetch('/api/spots')
@@ -77,6 +77,15 @@ export const fetchAllSpots = () => async(dispatch) => {
   if(res.ok){
     const data = await res.json()
     dispatch(loadSpots(data.Spots));
+  }
+};
+
+// thunk to fetch current user's spots
+export const fetchUserSpots = () => async (dispatch) => {
+  const res = await csrfFetch('/api/spots/current', { credentials: 'include' });
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(loadSpots(data.Spots));  // reused existing action creator
   }
 };
 
