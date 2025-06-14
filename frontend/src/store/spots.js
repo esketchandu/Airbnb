@@ -153,3 +153,34 @@ export const createSpot = (spotData) => async(dispatch) => {
 
   return newSpot
 }
+
+// thunk to update a spot
+
+export const updateSpotThunk = (spotId, spotData) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({
+      address: spotData.address,
+      city: spotData.city,
+      state: spotData.state,
+      country: spotData.country,
+      lat: spotData.lat,
+      lng: spotData.lng,
+      name: spotData.name,
+      description: spotData.description,
+      price: spotData.price
+    })
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw errorData;
+  }
+
+  const updatedSpot = await res.json();
+
+  dispatch(updateSpot(updatedSpot));  // this updates Redux store
+  return updatedSpot;
+};
