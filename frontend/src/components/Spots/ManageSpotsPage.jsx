@@ -28,11 +28,15 @@ function ManageSpotsPage() {
       <h1>Manage Spots</h1>
       <div className="spot-tiles">
         {spots.map(spot => (
-          <div key={spot.id} className="spot-tile" onClick={() => navigate(`/spots/${spot.id}`)}>
-            <img src={spot.previewImage} alt={spot.name} />
-            <div>{spot.city}, {spot.state}</div>
-            <div>★ {spot.avgRating ? spot.avgRating.toFixed(1) : 'New'}</div>
-            <div>${spot.price} per night</div>
+          <div key={spot.id} className="spot-tile">
+            <div className="tile-content" onClick={() => navigate(`/spots/${spot.id}`)}>
+              <img src={spot.previewImage} alt={spot.name} />
+              <div className="location">{spot.city}, {spot.state}</div>
+              <div className="rating">
+                ★ {spot.avgRating ? spot.avgRating.toFixed(1) : 'New'}
+              </div>
+              <div className="price">${spot.price} per night</div>
+            </div>
 
             <div className="spot-actions">
               <button onClick={(e) => { e.stopPropagation(); navigate(`/spots/${spot.id}/edit`) }}>Update</button>
