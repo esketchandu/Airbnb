@@ -8,6 +8,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center; /* to center nicely on large screens */
 }
 
 .spot-tile {
@@ -15,17 +16,45 @@
   padding: 10px;
   width: 220px;
   border-radius: 10px;
-  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-.spot-tile img {
+/* make only the content area clickable */
+.tile-content {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.tile-content img {
   width: 100%;
   height: 150px;
   object-fit: cover;
   border-radius: 8px;
 }
 
+.location, .rating, .price {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.spot-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
 .spot-actions button {
-  margin-top: 10px;
-  margin-right: 5px;
+  flex: 1;
+  margin: 0 5px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #f7f7f7;
+}
+
+.spot-actions button:hover {
+  background-color: #e0e0e0;
 }
