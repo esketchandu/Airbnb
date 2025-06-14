@@ -29,12 +29,13 @@ const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
+      // {
+      //   path: '/',
+      //   element: <h1>Welcome!</h1>
+      // },
       {
+        //path: '/spots',
         path: '/',
-        element: <h1>Welcome!</h1>
-      },
-      {
-        path: '/spots',
         element: <AllSpotsPage />
       },
       {
