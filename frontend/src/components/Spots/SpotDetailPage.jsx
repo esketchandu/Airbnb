@@ -6,6 +6,7 @@ import './SpotDetailPage.css';
 import { loadReviews } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 import PostReview from "../Reviews/PostReview";
+import DeleteReviewModal from "../Reviews/DeleteReviewModal";
 
 function SpotDetailPage() {
   const { spotId } = useParams()
@@ -71,7 +72,8 @@ function SpotDetailPage() {
         {sessionUser && !isOwner && !hasReviewed && (
           <OpenModalButton
             buttonText="Post Your Review"
-            modalComponent={() => <PostReview spotId={spotId} />}
+            //modalComponent={() => <PostReview spotId={spotId} />}
+            modalComponent={<PostReview spotId={spotId} />}
           />
         )}
         <h2>
@@ -88,6 +90,14 @@ function SpotDetailPage() {
               <p><strong>{review.User?.firstName}</strong></p>
               <p>{new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}</p>
               <p>{review.review}</p>
+
+              {/* Add delete button if the review belongs to current user */}
+              {sessionUser?.id === review.userId && (
+                <OpenModalButton
+                  buttonText="Delete"
+                  modalComponent={<DeleteReviewModal reviewId={review.id} />}
+                />
+              )}
       </div>
     ))
   )}
