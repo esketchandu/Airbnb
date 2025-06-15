@@ -1,0 +1,33 @@
+.delete-review-modal {
+  text-align: center;
+  padding: 20px;
+}
+
+.delete-review-modal h2 {
+  margin-bottom: 10px;
+}
+
+.delete-review-modal p {
+  margin-bottom: 20px;
+}
+
+.delete-review-modal button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+.confirm-delete {
+  background-color: #FF5A5F;
+  color: white;
+  border: none;
+}
+
+.cancel-delete {
+  background-color: #555555;
+  color: white;
+  border: none;
+}
