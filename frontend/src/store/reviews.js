@@ -16,12 +16,18 @@ const setReviews = (reviews) => ({
 
 // Action type
 const add_review = 'reviews/add_review'
+const delete_review = 'reviews/delete_review'
 
 // These are Action creator for review
 const addReview = (review) => ({
   type: add_review,
   review
-})
+});
+
+const deleteReview = (reviewId) => ({
+  type: delete_review,
+  reviewId
+});
 
 // Thunk to create a review
 export const createReviewThunk = (spotId, reviewData) => async(dispatch) => {
@@ -43,6 +49,21 @@ export const createReviewThunk = (spotId, reviewData) => async(dispatch) => {
   return newReview
 }
 
+// Thunk to delete a review
+export const deleteReviewThunk = (reviewId) => async(dispatch) => {
+  const res = await fetch(`/api/reviews/${reviewId}`, {
+    method: 'DELETE',
+    credentials: 'include'
+  });
+
+  if(res.ok){
+    dispatch(deleteReview(reviewId))
+  } else {
+    const errorData = await res.json()
+    throw errorData
+  }
+};
+
 // Initial state and reducer
 const initialState = {};
 
@@ -60,6 +81,11 @@ export default function reviewsReducer(state = initialState, action) {
         ...state,
         [action.review.id]: action.review
       };
+    }
+    case delete_review: {
+      const newState = { ...state };
+      delete newState[action.reviewId];
+      return newState;
     }
     default:
       return state;
