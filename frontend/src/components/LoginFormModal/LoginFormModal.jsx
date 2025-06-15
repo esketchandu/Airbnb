@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
@@ -11,6 +11,13 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+  // This clears form when modal opens
+  useEffect(() => {
+    setCredential("")
+    setPassword("")
+    setErrors({})
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
@@ -22,6 +29,13 @@ function LoginFormModal() {
           setErrors(data.errors);
         }
       });
+  };
+
+  // Demo user button logic
+  const handleDemoUser = () => {
+    dispatch(sessionActions.login({ credential: "Demo-lition", password: "password" }))
+      .then(closeModal)
+      .catch(() => {});
   };
 
   return (
@@ -37,6 +51,7 @@ function LoginFormModal() {
             required
           />
         </label>
+
         <label>
           Password
           <input
@@ -46,10 +61,21 @@ function LoginFormModal() {
             required
           />
         </label>
+
         {errors.credential && (
-          <p>{errors.credential}</p>
+          <p className="error-message">{errors.credential}</p>
         )}
-        <button type="submit">Log In</button>
+
+        {/* Added disabled logic directly on button */}
+        <button type="submit" disabled={credential.length < 4 || password.length < 6}>
+          Log In
+        </button>
+
+        {/* Added Demo user button */}
+        <button type="button" onClick={handleDemoUser}>
+          Log in as Demo User
+        </button>
+
       </form>
     </>
   );
