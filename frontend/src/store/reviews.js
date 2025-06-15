@@ -51,9 +51,9 @@ export const createReviewThunk = (spotId, reviewData) => async(dispatch) => {
 
 // Thunk to delete a review
 export const deleteReviewThunk = (reviewId) => async(dispatch) => {
-  const res = await fetch(`/api/reviews/${reviewId}`, {
+  const res = await csrfFetch(`/api/reviews/${reviewId}`, {
     method: 'DELETE',
-    credentials: 'include'
+    //credentials: 'include'
   });
 
   if(res.ok){
