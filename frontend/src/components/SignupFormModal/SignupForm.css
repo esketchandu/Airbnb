@@ -1,0 +1,63 @@
+.signup-form-modal {
+  padding: 20px;
+  width: 400px;
+  border-radius: 10px;
+  background-color: white;
+  font-family: Arial, sans-serif;
+}
+
+.signup-form-modal h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.signup-form-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+}
+
+.signup-form-modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 500;
+  color: #555;
+}
+
+.signup-form-modal input {
+  padding: 10px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.signup-form-modal button {
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  background-color: #FF5A5F;
+  color: white;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.signup-form-modal button[disabled] {
+  background-color: #e0e0e0;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.signup-form-modal .error-message {
+  color: red;
+  font-size: 14px;
+  margin: 0;
+  padding: 4px 0;
+}
