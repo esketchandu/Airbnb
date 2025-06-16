@@ -6,21 +6,21 @@
   font-family: Arial, sans-serif;
 }
 
-/* ✅ Added heading styling to match wireframe font size & center */
 .login-form-modal h1 {
   text-align: center;
   font-size: 24px;
   margin-bottom: 20px;
+  color: #333;
 }
 
-form {
+.login-form-modal form {
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding: 0;
 }
 
-input {
+.login-form-modal input {
   padding: 10px;
   border: 1px solid #999;
   border-radius: 5px;
@@ -28,7 +28,7 @@ input {
   width: 100%;
 }
 
-button {
+.login-form-modal button {
   padding: 12px;
   font-weight: bold;
   border-radius: 5px;
@@ -39,13 +39,13 @@ button {
   font-size: 16px;
 }
 
-button[disabled] {
+.login-form-modal button[disabled] {
   background-color: #e0e0e0;
   color: #888;
   cursor: not-allowed;
 }
 
-.demo-button {
+.login-form-modal .demo-button {
   background: none;
   color: #0055aa;
   text-decoration: underline;
@@ -56,7 +56,7 @@ button[disabled] {
   margin-top: 10px;
 }
 
-.error-message {
+.login-form-modal .error-message {
   color: red;
   font-size: 14px;
 }
