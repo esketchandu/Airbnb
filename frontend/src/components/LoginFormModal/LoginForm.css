@@ -26,6 +26,7 @@
   border-radius: 5px;
   font-size: 14px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .login-form-modal button {
