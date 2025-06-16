@@ -12,7 +12,7 @@ function Navigation({ isLoaded }) {
         <NavLink to="/" className="logo-link">
           <div className="logo">
             <img src="/eske-logo.png" alt="Eske Logo" className="logo-image" />
-            <span className="logo-text">airbnb</span>
+            <span className="logo-text">Your Home</span>
           </div>
         </NavLink>
       </div>
