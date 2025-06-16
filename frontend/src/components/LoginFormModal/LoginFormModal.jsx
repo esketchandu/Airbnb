@@ -20,26 +20,30 @@ function LoginFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors({});
+    setErrors({}); // Clear any existing errors
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
           setErrors(data.errors);
+        } else {
+          setErrors({ credential: "The provided credentials were invalid." });
         }
       });
   };
 
   // Demo user button logic
   const handleDemoUser = () => {
+    setErrors({}); // Clear errors when demo user button is clicked
     dispatch(sessionActions.login({ credential: "Demo-lition", password: "password" }))
       .then(closeModal)
       .catch(() => {});
   };
 
   return (
-    <>
+
+    <div className="login-form-modal">
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -72,12 +76,12 @@ function LoginFormModal() {
         </button>
 
         {/* Added Demo user button */}
-        <button type="button" onClick={handleDemoUser}>
+        <button type="button" className="demo-button" onClick={handleDemoUser}>
           Log in as Demo User
         </button>
 
       </form>
-    </>
+    </div>
   );
 }
 
