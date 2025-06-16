@@ -1,61 +1,37 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-// import OpenModalButton from '../OpenModalButton/OpenModalButton';
-// import LoginFormModal from '../LoginFormModal/LoginFormModal';
-// import SignupFormModal from '../SignupFormModal/SignupFormModal';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
-  // let sessionLinks;
-  // if (sessionUser) {
-  //   sessionLinks = (
-  //     <li>
-  //       <ProfileButton user={sessionUser} />
-  //     </li>
-  //   );
-  // } else {
-  //   sessionLinks = (
-  //     <>
-  //       <li>
-  //         <OpenModalButton
-  //           buttonText="Log In"
-  //           modalComponent={<LoginFormModal />}
-  //         />
-  //       </li>
-  //       <li>
-  //         <OpenModalButton
-  //           buttonText="Sign Up"
-  //           modalComponent={<SignupFormModal />}
-  //         />
-  //       </li>
-  //     </>
-  //   );
-  // }
-
-  // return (
-  //   <ul>
-  //     <li>
-  //       <NavLink to="/">Home</NavLink>
-  //     </li>
-  //     {isLoaded && sessionLinks}
-  //   </ul>
-  // );
-
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
-      )}
-    </ul>
+    <nav className="navigation">
+      <div className="nav-left">
+        <NavLink to="/" className="logo-link">
+          <div className="logo">
+            <img src="/eske-logo.png" alt="Eske Logo" className="logo-image" />
+            <span className="logo-text">airbnb</span>
+          </div>
+        </NavLink>
+      </div>
+
+      <div className="nav-right">
+        {isLoaded && (
+          <>
+            {sessionUser && (
+
+              <NavLink to="/spots/new" className="create-spot-link">
+                Create a New Spot
+              </NavLink>
+            )}
+
+            <ProfileButton user={sessionUser} />
+          </>
+        )}
+      </div>
+    </nav>
   );
 }
-
 export default Navigation;
