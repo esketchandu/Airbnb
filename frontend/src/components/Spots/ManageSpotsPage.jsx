@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {fetchUserSpots} from '../../store/spots';
 import {Link, useNavigate} from 'react-router-dom';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import DeleteSpotModal from './DeleteSpotModal';
 import './ManageSpotsPage.css'
 
 function ManageSpotsPage() {
@@ -13,12 +15,12 @@ function ManageSpotsPage() {
     dispatch(fetchUserSpots());
   }, [dispatch]);
 
-  // Helper function for star rating display (consistent with landing page)
+  // Helper function for star rating display
   const getStarRating = (spot) => {
-    if (!spot.avgRating || spot.numReviews === 0) {
+    if (!spot.avgRating || spot.numReviews === 0 || isNaN(spot.avgRating)) {
       return "New";
     }
-    return spot.avgRating.toFixed(1);
+    return Number(spot.avgRating).toFixed(1);
   };
 
   if (!spots.length) {
@@ -71,15 +73,11 @@ function ManageSpotsPage() {
               >
                 Update
               </button>
-              <button
-                className="delete-button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  alert('Delete functionality coming soon')
-                }}
-              >
-                Delete
-              </button>
+              <OpenModalButton
+                buttonText="Delete"
+                modalComponent={<DeleteSpotModal spotId={spot.id} />}
+                onButtonClick={(e) => e.stopPropagation()} // Prevent tile click
+              />
             </div>
           </div>
         ))}
