@@ -60,3 +60,14 @@
   list-style: none;
   padding: 0;
 }
+
+@media (max-width: 768px) {
+  .edit-spot-form {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .edit-spot-form h1 {
+    font-size: 24px;
+  }
+}
