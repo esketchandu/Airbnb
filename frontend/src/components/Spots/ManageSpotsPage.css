@@ -1,60 +1,193 @@
 .manage-spots-page {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 20px auto;
-  padding: 20px;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+}
+
+/* Enhanced heading styling */
+.manage-spots-page h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+/* Empty state styling */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-state p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.create-spot-link {
+  display: inline-block;
+  background-color: #FF5A5F;
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.create-spot-link:hover {
+  background-color: #e14348;
 }
 
 .spot-tiles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center; /* to center nicely on large screens */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 24px;
+  padding: 0;
 }
 
 .spot-tile {
-  border: 1px solid #ccc;
-  padding: 10px;
-  width: 220px;
-  border-radius: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  transition: transform 0.2s ease;
   overflow: hidden;
+  cursor: pointer;
+}
+
+/* Add hover effect for image */
+.spot-tile:hover .tile-content img {
+  transform: scale(1.05);
 }
 
 /* make only the content area clickable */
 .tile-content {
-  cursor: pointer;
-  padding: 10px;
+  padding: 0;
+}
+
+.spot-info {
+  padding: 12px;
+}
+
+.location-rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* Image container to match landing page */
+.spot-image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
 }
 
 .tile-content img {
   width: 100%;
-  height: 150px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+  transition: transform 0.2s ease;
 }
 
-.location, .rating, .price {
-  margin: 8px 0;
+.location {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222222;
+  flex: 1;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: 14px;
+}
+
+.star-icon {
+  color: #FF5A5F;
+  font-size: 12px;
+}
+
+.rating-text {
+  color: #222222;
+  font-weight: 400;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+}
+
+.price-amount {
+  font-weight: 600;
+  font-size: 16px;
+  color: #222222;
+}
+
+.price-label {
+  font-weight: 400;
+  font-size: 16px;
+  color: #717171;
 }
 
 .spot-actions {
   display: flex;
-  justify-content: space-between;
-  padding: 10px;
+  gap: 12px;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #eee;
 }
 
 .spot-actions button {
   flex: 1;
-  margin: 0 5px;
-  padding: 8px;
+  padding: 10px 16px;
   font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  font-weight: 600;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   cursor: pointer;
-  background-color: #f7f7f7;
+  transition: all 0.2s;
 }
 
-.spot-actions button:hover {
-  background-color: #e0e0e0;
+/* Update button styling */
+.update-button {
+  background-color: #FF5A5F;
+  color: white;
+  border-color: #FF5A5F;
+}
+
+.update-button:hover {
+  background-color: #e14348;
+  border-color: #e14348;
+}
+
+/* Delete button styling */
+.delete-button {
+  background-color: white;
+  color: #d93025;
+  border-color: #d93025;
+}
+
+.delete-button:hover {
+  background-color: #fef2f2;
+  color: #b91c1c;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .manage-spots-page {
+    padding: 16px;
+  }
+
+  .spot-tiles {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .spot-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
