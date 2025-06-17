@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { createReviewThunk } from "../../store/reviews";
@@ -13,6 +13,14 @@ function PostReview({ spotId }) {
   const [stars, setStars] = useState(0);
   const [errors, setErrors] = useState([]);
   const [hoveredStar, setHoveredStar] = useState(0);
+
+  // Reset form when modal opens
+  useEffect(() => {
+    setReview("");        // Clear review text
+    setStars(0);          // Clear star rating
+    setErrors([]);        // Clear any errors
+    setHoveredStar(0);    // Clear hover state
+  }, []);
 
   // Handle the form submission
   const handleSubmit = async (e) => {
