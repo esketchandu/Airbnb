@@ -147,9 +147,20 @@ router.get('/current', requireAuth, async (req, res) => {
       })
 
     }
+    const formattedSpots = spots.map((spot) => {
+        const spotJSON = spot.toJSON();
+        return {
+          ...spotJSON,
+          lat: parseFloat(spotJSON.lat),
+          lng: parseFloat(spotJSON.lng),
+          price: parseFloat(spotJSON.price),
+          avgRating: spotJSON.avgRating !== null ? parseFloat(spotJSON.avgRating) : null,
+        };
+      });
 
     // Respond with the spots
-    res.status(200).json({ Spots: spots });
+      res.status(200).json({ Spots: formattedSpots });
+
 });
 
 // Get details of a Spot from an id
@@ -169,7 +180,7 @@ router.get('/:spotId', async (req, res) => {
             FROM "airbnb_schema"."Reviews"
             WHERE "Reviews"."spotId" = "Spot"."id"
           )`),
-          'avgStarRating'
+          'avgRating'
         ],
         // Calculate numReviews using a subquery
         [
@@ -207,7 +218,7 @@ router.get('/:spotId', async (req, res) => {
     lat: parseFloat(spot.lat),
     lng: parseFloat(spot.lng),
     price: parseFloat(spot.price),
-    avgStarRating: spot.get('avgStarRating') ? parseFloat(spot.get('avgStarRating')) : 0, // Use get() to retrieve subquery values
+    avgRating: spot.get('avgRating') ? parseFloat(spot.get('avgRating')) : null, // Use get() to retrieve subquery values
     numReviews: spot.get('numReviews') ? parseInt(spot.get('numReviews'), 10) : 0 // Use get() to retrieve subquery values
   };
 
