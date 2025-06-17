@@ -1,54 +1,129 @@
 .spots-page{
-  padding: 20px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .spots-grid{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 24px;
 }
 
 .spot-card{
   text-decoration: none;
   color: black;
-  border-radius: 8px;
-  overflow: hidden;
+  border-radius: 12px;
+  overflow: visible; /* Allow image to have its own border radius */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+  display: block;
 }
 
 .spot-card:hover{
-  transform: translateY(-4px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02); /* sclae is better instead of translateY for smoother effect*/
+  /*box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);*/
 }
 
-.spot-image{
+.spot-image-container{
   width: 100%;
-  height: 200px;
+  height: 250px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.spot-image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.spot-card:hover .spot-image {
+  transform: scale(1.05);
 }
 
 .spot-info{
-  padding: 10px;
+  padding: 0px; /* use margins for spacing */
 }
 
 .spot-location-rating{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 4px;
 }
 
 .spot-location{
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
+  color: #222222;
+  flex: 1;
 }
 
 .spot-rating{
-  font-size: 0.9rem;
+  font-size: 14px;
+  display: flex;
+  gap: 4px;
+  font-size: 14px;
 }
 
+.star-icon {
+  color: #FF5A5F;
+  font-size: 12px;
+}
+
+.rating-text {
+  color: #222222;
+  font-weight: 400;
+}
 .spot-price{
-  margin-top: 5px;
-  font-size: 1rem;
+  margin-top: 8px;
+  display: flex;
+  align-items: baseline;
+}
+
+.price-amount {
+  font-weight: 600;
+  font-size: 16px;
+  color: #222222;
+}
+
+.price-label {
+  font-weight: 400;
+  font-size: 16px;
+  color: #717171;   /* CHANGE: Lighter color for "night" label */
+}
+
+/* Responsive design per wireframe requirements */
+/* Minimum: 1 column, Maximum: 4 columns */
+@media (max-width: 600px) {
+  .spots-grid {
+    grid-template-columns: 1fr; /* 1 column on small screens */
+    gap: 16px;
+  }
+
+  .spots-page {
+    padding: 16px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .spots-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .spots-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on large screens */
+  }
+}
+
+@media (min-width: 1201px) {
+  .spots-grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 columns on extra large screens */
+  }
 }
