@@ -13,32 +13,42 @@ function AllSpotsPage() {
     dispatch(fetchAllSpots());
   }, [dispatch]);
 
-  //
-  // if (!spotsArray.length) {
-  //   return <p>Loading spots...</p>;
-  // }
+  // helper function to get star rating display as per AirBnB MVP requirement
+  const getStarRating = (spot) => {
+    if (!spot.avgRating || spot.numReviews === 0) {
+      return "New";
+    }
+    return spot.avgRating.toFixed(1);
+  };
 
   return(
     <div className="spots-page">
-      <h1>Explore Spots</h1>
+
       <div className="spots-grid">
         {spotsArray.map(spot => (
           <Link to={`/spots/${spot.id}`} className="spot-card" key={spot.id} title={spot.name}>
+            <div className="spot-image-container">
             <img
               className="spot-image"
               src={spot.previewImage}
               alt={spot.name}
-              style={{ width: '300px', height: '200px', objectFit: 'cover' }}
             />
+            </div>
             <div className="spot-info">
               <div className="spot-location-rating">
                 <span className="spot-location">{spot.city}, {spot.state}</span>
-                <span className="spot-rating">★ {spot.avgRating ? spot.avgRating.toFixed(1) : 'New'}</span>
+                <span className="spot-rating">
+                  <span className="star-icon">★</span>
+                  <span className="rating-text">{getStarRating(spot)}</span>
+                </span>
               </div>
-              <p className="spot-price"><strong>${spot.price}</strong> night</p>
+              <div className="spot-price">
+                <span className="price-amount">${spot.price}</span>
+                <span className="price-label"> night</span>
               </div>
-            </Link>
-          ))}
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );
