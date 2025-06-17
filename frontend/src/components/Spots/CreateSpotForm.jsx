@@ -39,6 +39,13 @@ function CreateSpotForm(){
     if(!price) newErrors.price = "Price is required";
     if(!previewImage || !isValidImage(previewImage)) newErrors.previewImage = "Preview image URL is required and must end in .png, .jpg, or .jpeg";
 
+    // validation for additional image URLs
+    if(image1 && !isValidImage(image1)) newErrors.image1 = "Image URL must end in .png, .jpg, or .jpeg";
+    if(image2 && !isValidImage(image2)) newErrors.image2 = "Image URL must end in .png, .jpg, or .jpeg";
+    if(image3 && !isValidImage(image3)) newErrors.image3 = "Image URL must end in .png, .jpg, or .jpeg";
+    if(image4 && !isValidImage(image4)) newErrors.image4 = "Image URL must end in .png, .jpg, or .jpeg";
+
+
     if(Object.keys(newErrors).length > 0){
       setErrors(newErrors)
       return;
@@ -77,6 +84,7 @@ function CreateSpotForm(){
     <form className="create-spot-form" onSubmit={handleSubmit}>
       <h1>Create a New Spot</h1>
 
+      <div className="location-section">
       {/* Information related to location */}
       <h2>Where&apos;s your place located?</h2>
       <p>Guests will only get your exact address once they booked a reservation.</p>
@@ -94,6 +102,7 @@ function CreateSpotForm(){
 
       <input placeholder="Latitude (optional)" value={lat} onChange={(e) => setLat(e.target.value)} />
       <input placeholder="Longitude (optional)" value={lng} onChange={(e) => setLng(e.target.value)} />
+      </div>
 
       {/* Information related to description */}
       <h2>Describe your place to guests</h2>
