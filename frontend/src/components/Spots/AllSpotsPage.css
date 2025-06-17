@@ -23,7 +23,6 @@
 
 .spot-card:hover{
   transform: scale(1.02); /* sclae is better instead of translateY for smoother effect*/
-  /*box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);*/
 }
 
 .spot-image-container{
@@ -94,7 +93,7 @@
 .price-label {
   font-weight: 400;
   font-size: 16px;
-  color: #717171;   /* CHANGE: Lighter color for "night" label */
+  color: #717171;   /* Lighter color for "night" label */
 }
 
 /* Responsive design per wireframe requirements */
