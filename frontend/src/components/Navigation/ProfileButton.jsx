@@ -39,6 +39,13 @@ function ProfileButton({ user }) {
      navigate('/'); // This is to navigate to home page after logout
   };
 
+ // Added handler for Manage Spots navigation
+  const handleManageSpots = () => {
+    setShowMenu(false);
+    navigate('/spots/current');
+  };
+
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -52,6 +59,9 @@ function ProfileButton({ user }) {
             <li>Hello, {user.firstName}</li>
             {/*<li>{user.firstName} {user.lastName}</li>*/}
             <li>{user.email}</li>
+            <li>
+              <button onClick={handleManageSpots}>Manage Spots</button>
+            </li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
