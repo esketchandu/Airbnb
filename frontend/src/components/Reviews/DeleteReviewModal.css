@@ -1,23 +1,40 @@
 .delete-review-modal {
   text-align: center;
   padding: 20px;
+  max-width: 400px;
+  font-family: Arial, sans-serif;
 }
 
 .delete-review-modal h2 {
   margin-bottom: 10px;
+  color: #333;
+  font-size: 20px;
 }
 
 .delete-review-modal p {
   margin-bottom: 20px;
+  color: #666;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.delete-review-modal .button-container {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .delete-review-modal button {
-  margin: 5px;
-  padding: 10px 20px;
+  flex: 1;
+  max-width: 150px;
+  padding: 12px 20px;
   font-size: 14px;
-  border-radius: 5px;
+  font-weight: 600;
+  border-radius: 8px;
   cursor: pointer;
-  border: 1px solid #ccc;
+  border: none;
+  transition: background-color 0.2s;
 }
 
 .confirm-delete {
@@ -26,8 +43,16 @@
   border: none;
 }
 
+.confirm-delete:hover {
+  background-color: #e14348;
+}
+
 .cancel-delete {
   background-color: #555555;
   color: white;
   border: none;
+}
+
+.cancel-delete:hover {
+  background-color: #404040;
 }
