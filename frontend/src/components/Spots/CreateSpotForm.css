@@ -1,0 +1,148 @@
+.create-spot-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Main title */
+.create-spot-form h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* Section headings */
+.create-spot-form h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+/* Section descriptions */
+.create-spot-form p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+/* Input fields styling */
+.create-spot-form input,
+.create-spot-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+/* Input focus state */
+.create-spot-form input:focus,
+.create-spot-form textarea:focus {
+  outline: none;
+  border-color: #FF5A5F;
+  box-shadow: 0 0 0 2px rgba(255, 90, 95, 0.2);
+}
+
+/* Textarea specific styling */
+.create-spot-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Number input styling */
+.create-spot-form input[type="number"] {
+  appearance: textfield;
+}
+
+/* Remove number input arrows */
+.create-spot-form input[type="number"]::-webkit-outer-spin-button,
+.create-spot-form input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Error message styling */
+.create-spot-form .error {
+  color: #d93025;
+  font-size: 14px;
+  margin: 5px 0 15px 0;
+  padding: 0;
+}
+
+/* Submit button styling */
+.create-spot-form button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  background-color: #FF5A5F;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Button hover effect */
+.create-spot-form button:hover {
+  background-color: #e14348;
+}
+
+/* Button disabled state */
+.create-spot-form button:disabled {
+  background-color: #e0e0e0;
+  color: #888;
+  cursor: not-allowed;
+}
+
+/* Location inputs section */
+.location-section {
+  margin-bottom: 20px;
+}
+
+/* Two-column layout for lat/lng (optional) */
+.lat-lng-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.lat-lng-container input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .create-spot-form {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .create-spot-form h1 {
+    font-size: 24px;
+  }
+
+  .lat-lng-container {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .lat-lng-container input {
+    margin-bottom: 10px;
+  }
+}
