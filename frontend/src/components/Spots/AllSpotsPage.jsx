@@ -44,7 +44,7 @@ function AllSpotsPage() {
               </div>
               <div className="spot-price">
                 <span className="price-amount">${spot.price}</span>
-                <span className="price-label">  night</span>
+                <span className="price-label"> night</span>
               </div>
             </div>
           </Link>

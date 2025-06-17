@@ -36,6 +36,11 @@ function SpotDetailPage() {
   const previewImage = spot.SpotImages?.find(img => img.preview)?.url;
   const additionalImages = spot.SpotImages ? spot.SpotImages.filter(img => !img.preview).slice(0, 4) : [];
 
+  // Reserve button handler to match exact MVP requirement text
+  const handleReserveClick = () => {
+    alert("Feature Coming Soon...");
+  };
+
   return (
     <div className="spot-detail-page">
       <h1>{spot.name}</h1>
@@ -57,14 +62,14 @@ function SpotDetailPage() {
         </div>
 
         <div className="spot-callout-box">
-          <p><strong>${spot.price}</strong> per night</p>
+          <p><strong>${spot.price}</strong> night</p>
           <p>
              <span>★</span>{' '}
              {spot.numReviews === 0
               ? 'New'
               : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} ${spot.numReviews === 1 ? 'Review' : 'Reviews'}`}
           </p>
-          <button onClick={() => alert('Feature coming soon')}>Reserve</button>
+          <button onClick={handleReserveClick}>Reserve</button>
         </div>
       </div>
 
