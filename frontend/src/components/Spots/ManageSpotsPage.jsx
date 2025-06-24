@@ -57,7 +57,7 @@ function ManageSpotsPage() {
 
               <div className="price">
                 <span className="price-amount">${spot.price}</span>
-                <span className="price-label"> night</span>
+                <span className="price-label">&nbsp;night</span>
             </div>
             </div>
             </div>
