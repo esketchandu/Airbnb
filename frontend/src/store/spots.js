@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 // Action Types
 const load_spots = 'spots/load_spots';
+const load_user_spots = 'spots/load_user_spots' // This is to separate the action for user spots
 const add_spot = 'spots/add_spot';
 const update_spot = 'spots/update_spot';
 const delete_spot = 'spots/delete_spot';
@@ -10,6 +11,12 @@ const load_spot_details = 'spots/load_spot_details'
 // These are Action creators for spot
 export const loadSpots = (spots) => ({
   type: load_spots,
+  spots
+});
+
+// This is to separate action creator for user spots
+export const loadUserSpots = (spots) => ({
+  type: load_user_spots,
   spots
 });
 
@@ -35,8 +42,12 @@ export const loadSpotDetails = (spot) => ({
 
 
 // These are reducers for spot
+// Better initial state structure
 
-const initialState = {}
+const initialState = {
+  allSpots: {},
+  userSpots: {}
+}
 
 export default function spotsReducer(state = initialState, action) {
   switch(action.type) {
@@ -45,24 +56,60 @@ export default function spotsReducer(state = initialState, action) {
       action.spots.forEach(spot => {
         allSpots[spot.id] = spot;
       });
-      return allSpots;
+      return {
+        ...state,
+        allSpots };
     }
+
+    case load_user_spots:{
+      const userSpots = {};
+      action.spots.forEach(spot => {
+        userSpots[spot.id] = spot;
+      });
+      return {
+        ...state,
+        userSpots
+      };
+    }
+
+    // add spot to both allSpots and userSpots
     case add_spot:
-      return{...state, [action.spot.id]: action.spot};
+      return{
+        ...state,
+        allSpots: { ...state.allSpots, [action.spot.id]: action.spot},
+        userSpots: {...state.userSpots, [action.spot.id]: action.spot}
+      }
 
+    // update both allSpots and userSpots
     case update_spot:
-      return {...state, [action.spot.id]: action.spot};
+      return {
+        ...state,
+        allSpots: { ...state.allSpots, [action.spot.id]: action.spot},
+        userSpots: { ...state.userSpots, [action.spot.id]: action.spot}
+      }
 
+    // delete from both allSpots and userSpots
     case delete_spot:{
-      const newState = {...state}
-      delete newState[action.spotId]
-      return newState;
+      const newAllSpots = {...state.allSpots}
+      const newUserSpots = {...state.userSpots}
+      delete newAllSpots[action.spotId]
+      delete newUserSpots[action.spotId]
+      return {
+        ...state,
+        allSpots: newAllSpots,
+        userSpots: newUserSpots
+      };
     }
+
+    // update allSpots (spot details go to all spots)
     case load_spot_details:
       return {
         ...state,
-        [action.spot.id]: action.spot
-    }
+        allSpots: {
+          ...state.allSpots,
+          [action.spot.id]: action.spot
+        }
+    };
     default:
       return state;
 
@@ -85,7 +132,7 @@ export const fetchUserSpots = () => async (dispatch) => {
   const res = await csrfFetch('/api/spots/current', { credentials: 'include' });
   if (res.ok) {
     const data = await res.json();
-    dispatch(loadSpots(data.Spots));  // reused existing action creator
+    dispatch(loadUserSpots(data.Spots));  // Here I am using separate action
   }
 };
 
