@@ -67,7 +67,7 @@ function SpotDetailPage() {
              <span>★</span>{' '}
              {spot.numReviews === 0
               ? 'New'
-              : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} ${spot.numReviews === 1 ? 'Review' : 'Reviews'}`}
+              : `${spot.avgRating.toFixed(1)} · ${spot.numReviews} ${spot.numReviews === 1 ? 'Review' : 'Reviews'}`}
           </p>
           <button onClick={handleReserveClick}>Reserve</button>
         </div>
@@ -85,7 +85,7 @@ function SpotDetailPage() {
           <span>★</span>{' '}
           {spot.numReviews === 0
             ? 'New'
-            : `${spot.avgStarRating.toFixed(1)} · ${spot.numReviews} ${spot.numReviews === 1 ? 'Review' : 'Reviews'}`}
+            : `${spot.avgRating.toFixed(1)} · ${spot.numReviews} ${spot.numReviews === 1 ? 'Review' : 'Reviews'}`}
         </h2>
         {reviews.length === 0 ? (
           <p>Be the first to post a review!</p>
