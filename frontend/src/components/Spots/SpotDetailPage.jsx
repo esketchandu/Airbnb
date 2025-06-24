@@ -62,7 +62,7 @@ function SpotDetailPage() {
         </div>
 
         <div className="spot-callout-box">
-          <p><strong>${spot.price}</strong> night</p>
+          <p><strong>${spot.price}</strong>&nbsp;night</p>
           <p>
              <span>★</span>{' '}
              {spot.numReviews === 0

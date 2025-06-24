@@ -15,10 +15,10 @@ function AllSpotsPage() {
 
   // helper function to get star rating display as per AirBnB MVP requirement
   const getStarRating = (spot) => {
-    if (!spot.avgRating || spot.numReviews === 0) {
+    if (spot.avgRating === null || spot.avgRating === undefined || spot.numReviews === 0) {
       return "New";
     }
-    return spot.avgRating.toFixed(1);
+    return Number(spot.avgRating).toFixed(1);
   };
 
   return(
