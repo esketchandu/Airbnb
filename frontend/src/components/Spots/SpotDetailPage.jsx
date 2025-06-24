@@ -11,7 +11,7 @@ import DeleteReviewModal from "../Reviews/DeleteReviewModal";
 function SpotDetailPage() {
   const { spotId } = useParams()
   const dispatch = useDispatch()
-  const spot = useSelector(state => state.spots[spotId])
+  const spot = useSelector(state => state.spots.allSpots[spotId])
   const sessionUser = useSelector(state => state.session.user)
   const allReviews = useSelector(state => Object.values(state.reviews)) || [];
   const reviews = allReviews.filter(review => review.spotId === +spotId)

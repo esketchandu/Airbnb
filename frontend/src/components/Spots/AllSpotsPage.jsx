@@ -6,7 +6,7 @@ import './AllSpotsPage.css'
 
 function AllSpotsPage() {
   const dispatch = useDispatch();
-  const spots = useSelector((state) => state.spots || {});
+  const spots = useSelector((state) => state.spots.allSpots || {});
   const spotsArray = Object.values(spots);
 
   useEffect(() => {

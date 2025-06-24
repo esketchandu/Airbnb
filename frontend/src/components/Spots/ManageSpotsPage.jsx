@@ -9,7 +9,7 @@ import './ManageSpotsPage.css'
 function ManageSpotsPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const spots = useSelector(state => Object.values(state.spots));
+  const spots = useSelector(state => Object.values(state.spots.userSpots || {}));
 
   useEffect(() => {
     dispatch(fetchUserSpots());
@@ -17,7 +17,7 @@ function ManageSpotsPage() {
 
   // Helper function for star rating display
   const getStarRating = (spot) => {
-    if (!spot.avgRating || spot.numReviews === 0 || isNaN(spot.avgRating)) {
+    if (spot.avgRating === null || spot.avgRating === undefined || spot.numReviews === 0) {
       return "New";
     }
     return Number(spot.avgRating).toFixed(1);
