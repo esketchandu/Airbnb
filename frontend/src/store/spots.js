@@ -7,6 +7,7 @@ const add_spot = 'spots/add_spot';
 const update_spot = 'spots/update_spot';
 const delete_spot = 'spots/delete_spot';
 const load_spot_details = 'spots/load_spot_details'
+const clear_spots = 'spots/clear_spots'
 
 // These are Action creators for spot
 export const loadSpots = (spots) => ({
@@ -38,6 +39,11 @@ export const deleteSpot = (spotId) => ({
 export const loadSpotDetails = (spot) => ({
   type: load_spot_details,
   spot
+});
+
+// this is action creator to clear the spots
+export const clearSpots = () => ({
+  type: clear_spots
 });
 
 
@@ -110,6 +116,13 @@ export default function spotsReducer(state = initialState, action) {
           [action.spot.id]: action.spot
         }
     };
+
+    // Clear all spots data
+    case clear_spots:
+      return {
+        allSpots: {},
+        userSpots: {}
+      };
     default:
       return state;
 
