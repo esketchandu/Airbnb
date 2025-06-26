@@ -1,5 +1,6 @@
 import { csrfFetch } from './csrf';
-import { clearSpots } from './spots'; // importing clear spots action
+//import { clearSpots } from './spots'; // importing clear spots action
+import { clearUserSpots } from './spots';
 
 // Action types
 const SET_USER = "session/setUser";
@@ -32,6 +33,7 @@ export const login = (user) => async (dispatch) => {
   const data = await response.json();
 
   //dispatch(clearSpots()); // Clear spots data when user logs in
+  dispatch(clearUserSpots()); // Clear only user spots; keep allSpots
   dispatch(setUser(data.user));
   return response;
 };
@@ -74,7 +76,8 @@ export const signup = (user) => async (dispatch) => {
   });
   const data = await response.json();
 
-  dispatch(clearSpots()); // Clear spots data when user signs up
+  //dispatch(clearSpots()); // Clear spots data when user signs up
+  dispatch(clearUserSpots()); // Clear only user spots (keep allSpots for landing page)
   dispatch(setUser(data.user));
   return response;
 };
