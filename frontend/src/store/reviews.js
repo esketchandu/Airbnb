@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+
 export const loadReviews = (spotId) => async (dispatch) => {
   const res = await fetch(`/api/spots/${spotId}/reviews`);
   if (res.ok) {
@@ -15,14 +16,14 @@ const setReviews = (reviews) => ({
 });
 
 // Action type
-const add_review = 'reviews/add_review'
+// const add_review = 'reviews/add_review'
 const delete_review = 'reviews/delete_review'
 
 // These are Action creator for review
-const addReview = (review) => ({
-  type: add_review,
-  review
-});
+// const addReview = (review) => ({
+//   type: add_review,
+//   review
+// });
 
 const deleteReview = (reviewId) => ({
   type: delete_review,
@@ -45,7 +46,8 @@ export const createReviewThunk = (spotId, reviewData) => async(dispatch) => {
 
   // Next is to dispatch to redux so the new review for the spot is added
   const newReview = await res.json()
-  dispatch(addReview(newReview))
+  //dispatch(addReview(newReview))
+  dispatch(loadReviews(spotId))
   return newReview
 }
 
@@ -76,12 +78,12 @@ export default function reviewsReducer(state = initialState, action) {
       });
       return reviewsState;
     }
-    case add_review: {
-      return{
-        ...state,
-        [action.review.id]: action.review
-      };
-    }
+    // case add_review: {
+    //   return{
+    //     ...state,
+    //     [action.review.id]: action.review
+    //   };
+    // }
     case delete_review: {
       const newState = { ...state };
       delete newState[action.reviewId];
