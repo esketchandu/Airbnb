@@ -31,7 +31,7 @@ export const login = (user) => async (dispatch) => {
   });
   const data = await response.json();
 
-  dispatch(clearSpots()); // Clear spots data when user logs in
+  //dispatch(clearSpots()); // Clear spots data when user logs in
   dispatch(setUser(data.user));
   return response;
 };
