@@ -173,7 +173,7 @@ router.get('/:spotId', async (req, res) => {
     where: { id: spotId },
     attributes: {
       include: [
-        // Calculate avgStarRating using a subquery
+        // Calculate avgRating using a subquery
         [
           sequelize.literal(`(
             SELECT AVG("stars")
@@ -498,6 +498,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
   const { review, stars } = req.body;
   const { user } = req;
 
+  try {
   // check if the provided spot exists
   const spot = await Spot.findByPk(spotId);
   if(!spot) {
@@ -509,7 +510,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
   // Check if the user has already wrote a review for this spot
   const existingReview = await Review.findOne({
     where: {
-      spotId,
+      spotId:  parseInt(spotId), // Ensure integer comparison
       userId: user.id,
     },
   })
@@ -523,12 +524,18 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
   // If user do not have existing review, create a new review
   const newReview = await Review.create({
     userId: user.id,
-    spotId,
+    spotId: parseInt(spotId), // Ensure spotId is properly parsed as integer
     review,
-    stars,
+    stars: parseInt(stars), // Ensure stars is properly parsed as integer
   });
 
   res.status(201).json(newReview);
+} catch (error) {
+    return res.status(500).json({
+      message: 'Internal server error',
+      error: error.message
+    });
+  }
 });
 
 // Get all bookings for a spot based on the spot's id
